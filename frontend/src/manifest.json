@@ -11,5 +11,10 @@
       "scripts": ["background.js"]
     }
   },
-  "minimum_chrome_version": "28"
+  "sockets": {
+    "udp": {
+      "send":["*:*"],
+      "bind":["*:*"]
+    }
+  },  "minimum_chrome_version": "28"
 }
