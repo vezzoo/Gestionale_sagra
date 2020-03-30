@@ -1,5 +1,5 @@
 {
-  "name": "gestionale_sagra",
+  "name": "gestionale_sagra_backend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -14,7 +14,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "See LICENSE in ../LICENSE.md",
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.0",
