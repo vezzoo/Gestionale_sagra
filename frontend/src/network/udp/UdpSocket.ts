@@ -83,11 +83,13 @@ export default class UdpSocket implements NetworkAdapter{
     }
 
     onRecv(cb: (na: NetworkAdapter, data: ArrayBuffer, oth: any) => void): void {
-        globalThis.chrome.sockets.udp.onReceive.addListener((soid, data: ArrayBuffer, addr: string, port: number) => cb(this, data, {addr, port}));
+        globalThis.chrome.sockets.udp.onReceive.addListener((soid) => {
+            cb(this, soid.data, {addr: soid.remoteAddress, remotePort: soid.port})
+        });
     }
 
     onRecvErr(cb: (na: NetworkAdapter, code: number) => void): void {
-        globalThis.chrome.sockets.udp.onReceive.addListener((soid, errno: number) => cb(this, errno));
+        globalThis.chrome.sockets.udp.onReceive.addListener((soid) => cb(this, soid.resultCode));
     }
 
 }
