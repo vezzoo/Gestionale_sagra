@@ -9,8 +9,19 @@ if (environment.production) {
   enableProdMode();
 }
 
-let a = UdpSocket.create();
+(async function(){
+    let a = await UdpSocket.create();
+    try{
+        await a.bind("0.0.0.0", 8480);
+        console.log("Soket binded")
+    } catch (e) {
+        console.log(e);
+    }
 
+    a.onRecv((na, data, oth) => {
+        console.log(data, oth);
+    });
+})();
 
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));
