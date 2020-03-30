@@ -16,5 +16,6 @@
       "send":["*:*"],
       "bind":["*:*"]
     }
-  },  "minimum_chrome_version": "28"
+  },
+  "minimum_chrome_version": "44"
 }
