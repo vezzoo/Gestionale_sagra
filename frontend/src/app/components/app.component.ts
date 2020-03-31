@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
   templateUrl: '../models/app.component.html',
   styleUrls: ['../../styles/app.component.sass']
 })
+
 export class AppComponent {
-  title = 'gestionale-sagra-frontend';
+  title = 'gestionale';
 }

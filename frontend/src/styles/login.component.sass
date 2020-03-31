@@ -1,0 +1,58 @@
+$logo: '../assets/img/SanLorenzoLogo.png'
+$bg: "../assets/img/Bg1.jpg"
+
+.container
+    width: 100%
+    margin: 0 auto
+
+.login-container
+    width: 100%
+    min-height: 100vh
+    display: -webkit-box
+    display: -webkit-flex
+    display: -moz-box
+    display: -ms-flexbox
+    display: flex
+    flex-wrap: wrap
+    justify-content: center
+    align-items: center
+    background-size: 100%
+    background-image: url($bg)
+
+$pad: 50px
+.login-wrap
+    width: 960px
+    background: rgba(255, 255, 255, 0.75)
+    border-radius: 10px
+    overflow: hidden
+    display: -webkit-box
+    display: -webkit-flex
+    display: -moz-box
+    display: -ms-flexbox
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-between
+    padding: $pad 90px $pad $pad
+
+$dim: 400px
+.login-pic
+    width: $dim
+    height: $dim
+    background-size: $dim $dim
+    background-image: url($logo)
+    background-position: center
+
+.horizontally-centered
+    margin: auto
+    width: 50%
+    padding: 10px
+
+.title
+    font-size: 22pt
+    font-weight: bold
+    text-align: center
+    margin: 0 0 50px 0
+
+.input-label
+    width: 70%
+    margin: 0 auto !important
