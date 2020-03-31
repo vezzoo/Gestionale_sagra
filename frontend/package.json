@@ -5,7 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build_dbg": "ng build --eval-source-map --plugin ~inline_sources_maps.js",
+    "build_dbg": "test $IS_SCRIPT && ng build --eval-source-map --plugin ~inline_sources_maps.js && $CHROME_APP_CMD http://reload.extensions && sleep 2 && $CHROME_APP_CMD --app-id=$CHROME_APP_ID",
+    "serve_dbg": "sh chromeid.sh",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
