@@ -1,3 +1,3 @@
 export default interface Authenticator{
-    doAuthentication(headers, body, oth): void;
+    doAuthentication(headers, body, oth): boolean;
 }

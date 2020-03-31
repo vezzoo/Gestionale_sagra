@@ -1,10 +1,12 @@
 import UserData from "./UserData";
 import Comparator from "./comparator/Comparator";
 import EventExecution from "./EventExecution";
+import Authenticator from "../network/http_client/Authenticator";
+import {authentication_header} from "../settings/settings";
 
 let singleton_login_manager = null;
 
-export default class LoginManager {
+export default class LoginManager implements Authenticator{
 
     private current_user = null;
 
@@ -58,5 +60,11 @@ export default class LoginManager {
 
     requireAuth(required_permissions: Comparator<UserData>, fun: any): any {
         return fun.execute(this.isLogged() && required_permissions.eval(this.current_user))(this.isLogged() ? this.current_user : undefined);
+    }
+
+    doAuthentication(headers, body, oth): boolean {
+        if(!this.isLogged()) return false;
+        headers[authentication_header] = localStorage.getItem(this.loc_token);
+        return true;
     }
 }
