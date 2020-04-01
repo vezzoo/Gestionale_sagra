@@ -1,7 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit,} from '@angular/core';
+
+import {Router} from "@angular/router";
 
 import {FormBuilder} from '@angular/forms';
 import {animate, state, style, transition, trigger} from "@angular/animations";
+
 import {ng_animation} from "../../settings/ng_utils";
 import LoginManager from "../../login/LoginManager";
 
@@ -22,8 +25,8 @@ const animation = new ng_animation(animazione_mostra, animazione_nascondi);
                 opacity: 0
             })),
             transition(animation.forward(), animate('500ms ease-out')),
-            transition(animation.reverse(), animate('500ms ease-in'))
-        ])
+            transition(animation.reverse(), animate('600ms ease-in'))
+        ]),
     ]
 })
 
@@ -35,11 +38,15 @@ export class LoginComponent implements OnInit {
 
     private errorMessage: string = "Username o password errati";
 
-    constructor(private formBuilder: FormBuilder,) {
+    constructor(private formBuilder: FormBuilder, private router: Router) {
         this._checkoutForm = this.formBuilder.group({
             username: '',
             password: ''
         });
+    }
+
+    async pushToDashboard() {
+        await this.router.navigate(['dashboard']);
     }
 
     async checkIfIsLogged(): Promise<boolean> {
@@ -48,9 +55,9 @@ export class LoginComponent implements OnInit {
     }
 
     async ngOnInit(): Promise<void> {
-        if (await this.checkIfIsLogged()) {
-            //push to dashboard
-        }
+        // if (await this.checkIfIsLogged()) {
+        //     //push to dashboard
+        // }
     }
 
     get loginError() {
@@ -70,24 +77,35 @@ export class LoginComponent implements OnInit {
     }
 
     async doLogin(credentials: { username: string, password: string }): Promise<void> {
-        if (!await this.checkIfIsLogged()) {
-            let loginManager = await LoginManager.getEnvLogin();
-            let res = await loginManager.login(credentials.username, credentials.password);
-            if (res.success) {
-                //push to dashboard
-            } else {
-                this.errorMessage = res.message;
-                this._loginError = true;
-            }
-        }
+        // this.resetPassword();
+        // this._loginError = true;
+
+        await this.pushToDashboard();
+
+        // if (!await this.checkIfIsLogged()) {
+        //     let loginManager = await LoginManager.getEnvLogin();
+        //     let res = await loginManager.login(credentials.username, credentials.password);
+        //     if (res.success) {
+        //         //push to dashboard
+        //     } else {
+        //         this.errorMessage = res.message;
+        //         this._loginError = true;
+        //     }
+        // }
     }
 
-    getErrorMessage(): string {
+    resetPassword(): void {
+        this._hidePassword = true;
         this._checkoutForm.patchValue({
             password: ''
         });
+    }
 
-        return this.errorMessage;
+    getErrorMessage(): string {
+        if (this._loginError)
+            return this.errorMessage;
+        else
+            return "";
     }
 
     onKey(event: any) {

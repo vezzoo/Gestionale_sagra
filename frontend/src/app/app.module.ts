@@ -1,11 +1,8 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from "@angular/router";
 
-import {AppRoutingModule} from './app-routing.module';
 import {ReactiveFormsModule} from "@angular/forms";
-
-import {AppComponent} from './components/app.component';
-import {LoginComponent} from './components/login.component';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
@@ -43,15 +40,37 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 
+import {AppComponent} from './components/app.component';
+import {LoginComponent} from './components/login.component';
+import {DashboardComponent} from './components/dashboard.component';
+
+const appRoutes: Routes = [
+    {
+        path: '',
+        redirectTo: '/login',
+        pathMatch: 'full'
+    },
+    {
+        path: 'login',
+        component: LoginComponent
+    },
+    {
+        path: 'dashboard',
+        component: DashboardComponent
+    }
+    // {path: '**', component: PageNotFoundComponent}
+];
+
 @NgModule({
     declarations: [
         AppComponent,
-        LoginComponent
+        LoginComponent,
+        DashboardComponent
     ],
     imports: [
         BrowserModule,
-        AppRoutingModule,
         ReactiveFormsModule,
+        RouterModule.forRoot(appRoutes),
         BrowserAnimationsModule,
         MatAutocompleteModule,
         MatBadgeModule,

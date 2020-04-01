@@ -79,6 +79,7 @@ testem.log
 /typings
 
 *.css
+!*/assets/*.css
 *.map
 
 chrome_app/*.js
