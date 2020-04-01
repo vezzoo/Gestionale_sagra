@@ -48,10 +48,16 @@ import {ToolbarComponent} from './components/toolbar.component';
 const login = 'login';
 const dashboard = 'dashboard';
 
+const redirect = '/' + dashboard;
 const appRoutes: Routes = [
     {
+        path: 'index.html',
+        redirectTo: redirect,
+        pathMatch: 'full'
+    },
+    {
         path: '',
-        redirectTo: '/' + dashboard,
+        redirectTo: redirect,
         pathMatch: 'full'
     },
     {
