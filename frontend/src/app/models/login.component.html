@@ -7,7 +7,7 @@
             <div class="login-pic"></div>
 
             <form [formGroup]="checkoutForm"
-                  (ngSubmit)="onSubmit(checkoutForm.value)"
+                  (ngSubmit)="doLogin(checkoutForm.value)"
                   autocomplete="off"
                   class="horizontally-centered">
 
@@ -29,7 +29,7 @@
                 </mat-form-field>
 
                 <div [@errorLoginText]="errorLogin" class="login-error-div">
-                    <p class="login-error-text text">{{getErrorMessage()}}</p>
+                    <p *ngIf="loginError" class="login-error-text text">{{getErrorMessage()}}</p>
                 </div>
 
                 <div class="login-button-container">
