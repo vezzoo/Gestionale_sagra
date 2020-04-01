@@ -1,7 +1,7 @@
 export default class UserData{
     private _username: string;
     private _name: string;
-    private _permissions: string[]
+    private _permissions: string[];
 
     get username(): string {
         return this._username;
