@@ -25,13 +25,13 @@ export default class LoginManager implements Authenticator{
     constructor() {}
 
     async load_user(): Promise<void>{
-        if(await await chrome_local_storage_get(this.loc_is_logged)) {
+        if(await chrome_local_storage_get(this.loc_is_logged)) {
             this.is_logged = true;
             this.token = await chrome_local_storage_get(this.loc_token);
             this._current_user = new UserData(
                 await chrome_local_storage_get(this.loc_username),
                 await chrome_local_storage_get(this.loc_name),
-                JSON.parse(localStorage.getItem(this.loc_permissions))
+                JSON.parse(await chrome_local_storage_get(this.loc_permissions))
             )
         } else {
             this.is_logged = false;
