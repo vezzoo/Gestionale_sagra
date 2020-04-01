@@ -77,3 +77,7 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+
+chrome_app/*.js
+chrome_app/*.html
+chrome_app/*.ico
