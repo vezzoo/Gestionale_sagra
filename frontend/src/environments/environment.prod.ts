@@ -1,5 +1,3 @@
-// import env_default from "./environment.default";
-
 function doLog(level, co, ...data) {
   co(`[${level}][${new Date().toISOString()}]:`, ...data);
 }
