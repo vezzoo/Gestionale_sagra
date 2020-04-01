@@ -1,5 +1,4 @@
-$logo: '../assets/img/SanLorenzoLogo.png'
-$bg: "../assets/img/Bg1.jpg"
+@import "variables"
 
 .container
     width: 100%
@@ -17,13 +16,13 @@ $bg: "../assets/img/Bg1.jpg"
     justify-content: center
     align-items: center
     background-size: 100%
-    background-image: url($bg)
+    background-image: $loginBg
 
-$pad: 50px
+$pad: 2.6vw
 .login-wrap
-    width: 960px
+    width: 50%
     background: rgba(255, 255, 255, 0.75)
-    border-radius: 10px
+    border-radius: $borderRadius
     overflow: hidden
     display: -webkit-box
     display: -webkit-flex
@@ -32,27 +31,64 @@ $pad: 50px
     display: flex
     flex-wrap: wrap
     justify-content: space-between
-    padding: $pad 90px $pad $pad
+    padding: $pad 4.6vw $pad $pad
 
-$dim: 400px
+$dim: 21vw
 .login-pic
     width: $dim
     height: $dim
     background-size: $dim $dim
-    background-image: url($logo)
+    background-image: $logo
     background-position: center
 
 .horizontally-centered
     margin: auto
     width: 50%
-    padding: 10px
+    padding: .5vw
+
+.text
+    font-family: $font
 
 .title
     font-size: 22pt
     font-weight: bold
     text-align: center
-    margin: 0 0 50px 0
+    margin: 0 0 2vw 0
 
 .input-label
     width: 70%
-    margin: 0 auto !important
+    margin: 0 auto
+
+.mat-form-field
+    display: block
+    font-size: 12pt
+
+.login-button-container
+    margin: .5vw auto 0 auto
+    width: 70%
+
+.login-button
+    width: 100%
+    margin: 0
+    padding: 0
+    border: 2px solid $loginButtonBorderColor
+    background-color: $loginButtonBackgroundColor
+    color: $loginButtonTextColor
+
+.login-error-div
+    margin: 0 auto
+    width: 65%
+    text-align: center
+    padding-bottom: .4vw
+    border-radius: $borderRadius
+    background-color: red
+    line-height: $lineHeight
+    height: $lineHeight
+
+.login-error-text
+    color: white
+    font-size: 1.65vh
+    padding: .45vh 0 0 0
+
+.fake-error-div
+    background-color: transparent

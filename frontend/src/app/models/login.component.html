@@ -4,28 +4,37 @@
 
         <div class="login-wrap">
 
-            <div class="login-pic"
-                 data-tilt>
-            </div>
+            <div class="login-pic"></div>
 
             <form [formGroup]="checkoutForm"
                   (ngSubmit)="onSubmit(checkoutForm.value)"
+                  autocomplete="off"
                   class="horizontally-centered">
 
-                <p class="title">Login utente</p>
+                <p class="title text">Login utente</p>
 
-                <mat-form-field class="input-label">
+                <mat-form-field class="mat-form-field input-label text">
                     <mat-label>Username</mat-label>
-                    <input matInput placeholder="Inserire il nome utente" formControlName="User">
+                    <input matInput placeholder="Inserire il nome utente" formControlName="username"
+                           (keypress)="onKey($event)">
                 </mat-form-field>
 
-                <mat-form-field class="input-label">
+                <mat-form-field class="mat-form-field input-label text">
                     <mat-label>Password</mat-label>
-                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-                    <button mat-icon-button matSuffix (click)="hide = !hide">
-                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password"
+                           (keypress)="onKey($event)">
+                    <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+                        <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
                 </mat-form-field>
+
+                <div [@errorLoginText]="errorLogin" class="login-error-div">
+                    <p class="login-error-text text">{{getErrorMessage()}}</p>
+                </div>
+
+                <div class="login-button-container">
+                    <button class="login-button text" mat-button type="submit">Login</button>
+                </div>
 
             </form>
 
