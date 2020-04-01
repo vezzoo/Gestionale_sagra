@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
 
     async ngOnInit(): Promise<void> {
         // if (await this.checkIfIsLogged()) {
-        //     //push to dashboard
+        //     await this.pushToDashboard();
         // }
     }
 
@@ -77,17 +77,15 @@ export class LoginComponent implements OnInit {
     }
 
     async doLogin(credentials: { username: string, password: string }): Promise<void> {
-        // this.resetPassword();
-        // this._loginError = true;
-
+        //to remove!!
         await this.pushToDashboard();
 
         // if (!await this.checkIfIsLogged()) {
         //     let loginManager = await LoginManager.getEnvLogin();
         //     let res = await loginManager.login(credentials.username, credentials.password);
-        //     if (res.success) {
-        //         //push to dashboard
-        //     } else {
+        //     if (res.success)
+        //         await this.pushToDashboard();
+        //     else {
         //         this.errorMessage = res.message;
         //         this._loginError = true;
         //     }

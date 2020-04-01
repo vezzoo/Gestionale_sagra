@@ -43,19 +43,23 @@ import {MatTreeModule} from '@angular/material/tree';
 import {AppComponent} from './components/app.component';
 import {LoginComponent} from './components/login.component';
 import {DashboardComponent} from './components/dashboard.component';
+import {ToolbarComponent} from './components/toolbar.component';
+
+const login = 'login';
+const dashboard = 'dashboard';
 
 const appRoutes: Routes = [
     {
         path: '',
-        redirectTo: '/login',
+        redirectTo: '/' + dashboard,
         pathMatch: 'full'
     },
     {
-        path: 'login',
+        path: login,
         component: LoginComponent
     },
     {
-        path: 'dashboard',
+        path: dashboard,
         component: DashboardComponent
     }
     // {path: '**', component: PageNotFoundComponent}
@@ -65,7 +69,8 @@ const appRoutes: Routes = [
     declarations: [
         AppComponent,
         LoginComponent,
-        DashboardComponent
+        DashboardComponent,
+        ToolbarComponent
     ],
     imports: [
         BrowserModule,

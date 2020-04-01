@@ -10,7 +10,7 @@ cp $NAME/$NAME.component.html models/
 cp $NAME/$NAME.component.sass ../styles/
 rm -r $NAME
 
-sed -i 's/'"$NAME"'/components/' app.module.ts
+sed -i 's|'"$NAME"'/|components/|' app.module.ts
 
 sed -i 's|./'"$NAME"'.component.html|../models/'"$NAME"'.component.html|' components/$NAME.component.ts
 
