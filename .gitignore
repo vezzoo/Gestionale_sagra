@@ -78,6 +78,9 @@ yarn-error.log
 testem.log
 /typings
 
+*.css
+*.map
+
 chrome_app/*.js
 chrome_app/*.html
 chrome_app/*.ico
