@@ -4,12 +4,10 @@ import {FormBuilder} from '@angular/forms';
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {ng_animation} from "../../settings/ng_utils";
 import LoginManager from "../../login/LoginManager";
-import {login} from "../../settings/requests";
 
 const animazione_mostra = 'mostra';
 const animazione_nascondi = 'nascondi';
 const animation = new ng_animation(animazione_mostra, animazione_nascondi);
-const loginManager = LoginManager.getEnvLogin();
 
 @Component({
     selector: 'app-login',
@@ -35,7 +33,7 @@ export class LoginComponent implements OnInit {
     private _hidePassword: boolean = true;
     private _loginError: boolean = false;
 
-    private errorMessage: String = "Username o password errati";
+    private errorMessage: string = "Username o password errati";
 
     constructor(private formBuilder: FormBuilder,) {
         this._checkoutForm = this.formBuilder.group({
@@ -44,12 +42,13 @@ export class LoginComponent implements OnInit {
         });
     }
 
-    checkIfIsLogged(): boolean {
-        return loginManager.isLogged();
+    async checkIfIsLogged(): Promise<boolean> {
+        let loginManager = await LoginManager.getEnvLogin();
+        return (await loginManager.isLogged());
     }
 
-    ngOnInit(): void {
-        if (this.checkIfIsLogged()) {
+    async ngOnInit(): Promise<void> {
+        if (await this.checkIfIsLogged()) {
             //push to dashboard
         }
     }
@@ -70,19 +69,20 @@ export class LoginComponent implements OnInit {
         return this._checkoutForm;
     }
 
-    async doLogin(credentials: { username: string, password: string }) {
-        if (!this.checkIfIsLogged()) {
-            // let res = await loginManager.login(credentials.username, credentials.password);
-            // if (res.success) {
-            //     //push to dashboard
-            // } else {
-            //     this.errorMessage = res.message;
-            //     this._loginError = true;
-            // }
+    async doLogin(credentials: { username: string, password: string }): Promise<void> {
+        if (!await this.checkIfIsLogged()) {
+            let loginManager = await LoginManager.getEnvLogin();
+            let res = await loginManager.login(credentials.username, credentials.password);
+            if (res.success) {
+                //push to dashboard
+            } else {
+                this.errorMessage = res.message;
+                this._loginError = true;
+            }
         }
     }
 
-    getErrorMessage() {
+    getErrorMessage(): string {
         this._checkoutForm.patchValue({
             password: ''
         });
