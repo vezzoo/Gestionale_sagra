@@ -48,7 +48,9 @@ export default class HttpRequestTemplate{
             this.headers = this.replaceValues(fill, this.headers);
 
             if(Object.keys(this.body).length > 0) this.headers["Content-Type"] = "application/json";
-            if(this.authenticator) this.authenticator.doAuthentication(this.headers, this.body, this.oth);
+            if(this.authenticator)
+                if(!this.authenticator.doAuthentication(this.headers, this.body, this.oth))
+                    reject("Cannot do authentication!");
 
             let raw;
             try{
