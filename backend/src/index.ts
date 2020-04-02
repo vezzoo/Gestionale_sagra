@@ -21,8 +21,9 @@ export class MainLoop {
 }
 
 import utils_ping from "./utils/ping";
+import DatabaseInterface from "./database/DatabaseInterface";
 (async function(mainloop: MainLoop) {
-
+    await DatabaseInterface.getDatabase().connect();
     await mainloop.exec();
 })(
     new MainLoop()
