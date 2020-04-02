@@ -64,7 +64,6 @@ const appRoutes: Routes = [
         path: pages.dashboard,
         component: DashboardComponent
     },
-
     {
         path: index,
         redirectTo: redirect,
