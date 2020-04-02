@@ -7,10 +7,10 @@ import {login} from "../settings/requests";
 import LoginResult from "./LoginResult";
 import {chrome_local_storage_get, chrome_local_storage_set} from "../settings/chrome_apis";
 
-let singleton_login_manager = null;
 
 export default class LoginManager implements Authenticator{
 
+    private static singleton_login_manager: LoginManager|null = null;
     private _current_user:UserData = null;
 
     private readonly loc_username = "username";
@@ -42,11 +42,11 @@ export default class LoginManager implements Authenticator{
     }
 
     static async getEnvLogin(): Promise<LoginManager> {
-        if (singleton_login_manager == null){
-            singleton_login_manager = new LoginManager();
-            await singleton_login_manager.load_user()
+        if (this.singleton_login_manager == null){
+            this.singleton_login_manager = new LoginManager();
+            await this.singleton_login_manager.load_user()
         }
-        return singleton_login_manager;
+        return this.singleton_login_manager;
     }
 
     async isLogged(): Promise<boolean> {
