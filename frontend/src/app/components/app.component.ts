@@ -1,13 +1,20 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: '../models/app.component.html',
-  styleUrls: ['../../styles/app.component.sass']
+    selector: 'app-root',
+    templateUrl: '../models/app.component.html',
+    styleUrls: ['../../styles/app.component.sass']
 })
 
 export class AppComponent {
-  title = 'gestionale';
+    title = 'gestionale';
 
+    ngOnInit() {
+        history.pushState = function (a) {
 
+        };
+        history.replaceState = function (a) {
+
+        };
+    }
 }
