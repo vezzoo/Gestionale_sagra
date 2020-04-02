@@ -15,6 +15,13 @@
   "keywords": [],
   "author": "",
   "license": "See LICENSE in ../LICENSE.md",
+  "dependencies": {
+    "fastify": "^2.13.0",
+    "@types/node": "^13.9.8",
+    "fastify-plugin": "^1.6.1",
+    "regenerator-runtime": "^0.13.5",
+    "fluent-schema": "^0.10.0"
+  },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.0",
