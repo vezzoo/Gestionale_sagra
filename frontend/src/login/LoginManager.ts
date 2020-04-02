@@ -18,11 +18,12 @@ export default class LoginManager implements Authenticator{
     private readonly loc_permissions = "permissions";
     private readonly loc_is_logged = "is_logged";
     private readonly loc_token = "tok";
+    private readonly loc_data = "tok";
 
     private is_logged = false;
     private token:string;
 
-    constructor() {}
+    private constructor() {}
 
     async load_user(): Promise<void>{
         if(await chrome_local_storage_get(this.loc_is_logged)) {
@@ -31,7 +32,8 @@ export default class LoginManager implements Authenticator{
             this._current_user = new UserData(
                 await chrome_local_storage_get(this.loc_username),
                 await chrome_local_storage_get(this.loc_name),
-                JSON.parse(await chrome_local_storage_get(this.loc_permissions))
+                JSON.parse(await chrome_local_storage_get(this.loc_permissions)),
+                JSON.parse(await chrome_local_storage_get(this.loc_data))
             )
         } else {
             this.is_logged = false;
@@ -58,6 +60,7 @@ export default class LoginManager implements Authenticator{
             await chrome_local_storage_set(this.loc_username, username);
             await chrome_local_storage_set(this.loc_name, login_res.data.name ?? "UNKNOWN");
             await chrome_local_storage_set(this.loc_permissions, JSON.stringify(login_res.data.permissions));
+            await chrome_local_storage_set(this.loc_data, JSON.stringify(login_res.data.additional_data));
             await chrome_local_storage_set(this.loc_token, login_res.data.token);
             await chrome_local_storage_set(this.loc_is_logged, "true");
             await this.load_user();
@@ -69,8 +72,9 @@ export default class LoginManager implements Authenticator{
     async logout(){
         await chrome_local_storage_set(this.loc_username, "");
         await chrome_local_storage_set(this.loc_name, name);
-        await chrome_local_storage_set(this.loc_permissions, JSON.stringify([]));
+        await chrome_local_storage_set(this.loc_permissions, "[]");
         await chrome_local_storage_set(this.loc_token, "");
+        await chrome_local_storage_set(this.loc_data, "{}");
         await chrome_local_storage_set(this.loc_is_logged, "notrue");
         await this.load_user()
     }
