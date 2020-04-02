@@ -23,7 +23,7 @@ export default class LoginManager implements Authenticator{
     private is_logged = false;
     private token:string;
 
-    constructor() {}
+    private constructor() {}
 
     async load_user(): Promise<void>{
         if(await chrome_local_storage_get(this.loc_is_logged)) {
