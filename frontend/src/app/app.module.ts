@@ -1,5 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
+
 import {RouterModule, Routes} from "@angular/router";
 
 import {ReactiveFormsModule} from "@angular/forms";
@@ -44,29 +45,30 @@ import {AppComponent} from './components/app.component';
 import {LoginComponent} from './components/login.component';
 import {DashboardComponent} from './components/dashboard.component';
 import {ToolbarComponent} from './components/toolbar.component';
+import {pages} from "../settings/routing";
 
-const login = 'login';
-const dashboard = 'dashboard';
+const index = 'index.html';
 
-const redirect = '/' + dashboard;
+const redirect = '/' + pages.login;
 const appRoutes: Routes = [
-    {
-        path: 'index.html',
-        redirectTo: redirect,
-        pathMatch: 'full'
-    },
     {
         path: '',
         redirectTo: redirect,
         pathMatch: 'full'
     },
     {
-        path: login,
+        path: pages.login,
         component: LoginComponent
     },
     {
-        path: dashboard,
+        path: pages.dashboard,
         component: DashboardComponent
+    },
+
+    {
+        path: index,
+        redirectTo: redirect,
+        pathMatch: 'full'
     }
     // {path: '**', component: PageNotFoundComponent}
 ];
@@ -122,6 +124,7 @@ const appRoutes: Routes = [
     providers: [],
     bootstrap: [AppComponent]
 })
+
 export class AppModule {
 
 }
