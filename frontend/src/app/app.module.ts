@@ -41,15 +41,17 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 
+import {pages} from "../settings/routing";
+
 import {AppComponent} from './components/app.component';
 import {LoginComponent} from './components/login.component';
 import {DashboardComponent} from './components/dashboard.component';
 import {ToolbarComponent} from './components/toolbar.component';
-import {pages} from "../settings/routing";
+import {SidenavComponent} from './components/sidenav.component';
 
 const index = 'index.html';
 
-const redirect = '/' + pages.login;
+const redirect = '/' + pages.dashboard.path;
 const appRoutes: Routes = [
     {
         path: '',
@@ -57,13 +59,30 @@ const appRoutes: Routes = [
         pathMatch: 'full'
     },
     {
-        path: pages.login,
+        path: pages.login.path,
         component: LoginComponent
     },
     {
-        path: pages.dashboard,
+        path: pages.dashboard.path,
         component: DashboardComponent
     },
+    {
+        path: pages.cassa.path,
+        component: DashboardComponent
+    },
+    {
+        path: pages.magazzino.path,
+        component: DashboardComponent
+    },
+    {
+        path: pages.storico.path,
+        component: DashboardComponent
+    },
+    {
+        path: pages.statistiche.path,
+        component: DashboardComponent
+    },
+
     {
         path: index,
         redirectTo: redirect,
@@ -77,7 +96,8 @@ const appRoutes: Routes = [
         AppComponent,
         LoginComponent,
         DashboardComponent,
-        ToolbarComponent
+        ToolbarComponent,
+        SidenavComponent
     ],
     imports: [
         BrowserModule,

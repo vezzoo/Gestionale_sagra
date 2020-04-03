@@ -1,5 +1,27 @@
 <mat-toolbar class="toolbar">
-    <div class="benvenuto-div">
-        <p class="text benvenuto-text">Benvenuto <strong>{{user.name}}</strong>!</p>
+
+    <div class="logo-pic horizontally-centered" (click)="pushToDashboard()"></div>
+
+    <div class="right-toolbar horizontally-centered">
+
+        <div class="left-align" *ngIf="hasSideNav">
+            <button mat-icon-button matSuffix (click)="showSideNav = !showSideNav" type="button">
+                <mat-icon>{{'keyboard_arrow_right'}}</mat-icon>
+            </button>
+        </div>
+
+        <div class="benvenuto-div">
+            <p class="text benvenuto-text">{{user.name}}</p>
+        </div>
+
+        <div class="right-align">
+            <button mat-icon-button matSuffix (click)="logout()" type="button">
+                <mat-icon>{{'logout'}}</mat-icon>
+            </button>
+        </div>
+
     </div>
+
 </mat-toolbar>
+
+<app-sidenav *ngIf="hasSideNav"></app-sidenav>

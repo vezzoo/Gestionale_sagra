@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
     }
 
     async pushToDashboard() {
-        await this.router.navigate([pages.dashboard]);
+        await this.router.navigate([pages.dashboard.path]);
     }
 
     async checkIfIsLogged(): Promise<boolean> {
