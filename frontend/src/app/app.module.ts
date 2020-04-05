@@ -41,17 +41,19 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 
-import {pages} from "../settings/routing";
+import {getPath} from "../settings/routing";
 
 import {AppComponent} from './components/app.component';
 import {LoginComponent} from './components/login.component';
 import {DashboardComponent} from './components/dashboard.component';
 import {ToolbarComponent} from './components/toolbar.component';
-import {SidenavComponent} from './components/sidenav.component';
+import {UserinterfaceComponent} from './components/userinterface.component';
+import {CassaComponent} from './components/cassa.component';
+import { KeyboardListenerComponent } from './components/keyboard-listener.component';
 
 const index = 'index.html';
 
-const redirect = '/' + pages.dashboard.path;
+const redirect = getPath('ui');
 const appRoutes: Routes = [
     {
         path: '',
@@ -59,28 +61,39 @@ const appRoutes: Routes = [
         pathMatch: 'full'
     },
     {
-        path: pages.login.path,
+        path: getPath('login'),
         component: LoginComponent
     },
     {
-        path: pages.dashboard.path,
-        component: DashboardComponent
-    },
-    {
-        path: pages.cassa.path,
-        component: DashboardComponent
-    },
-    {
-        path: pages.magazzino.path,
-        component: DashboardComponent
-    },
-    {
-        path: pages.storico.path,
-        component: DashboardComponent
-    },
-    {
-        path: pages.statistiche.path,
-        component: DashboardComponent
+        path: getPath('ui'),
+        component: UserinterfaceComponent,
+        children: [
+            {
+                path: '',
+                redirectTo: getPath('dashboard'),
+                pathMatch: 'full'
+            },
+            {
+                path: getPath('dashboard'),
+                component: DashboardComponent
+            },
+            {
+                path: getPath('cassa'),
+                component: CassaComponent
+            },
+            {
+                path: getPath('magazzino'),
+                component: DashboardComponent
+            },
+            {
+                path: getPath('storico'),
+                component: DashboardComponent
+            },
+            {
+                path: getPath('statistiche'),
+                component: DashboardComponent
+            }
+        ]
     },
 
     {
@@ -97,12 +110,16 @@ const appRoutes: Routes = [
         LoginComponent,
         DashboardComponent,
         ToolbarComponent,
-        SidenavComponent
+        UserinterfaceComponent,
+        CassaComponent,
+        KeyboardListenerComponent
     ],
     imports: [
         BrowserModule,
         ReactiveFormsModule,
-        RouterModule.forRoot(appRoutes),
+        RouterModule.forRoot(appRoutes
+            // , { enableTracing: true }
+        ),
         BrowserAnimationsModule,
         MatAutocompleteModule,
         MatBadgeModule,

@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {pages} from "../../settings/routing";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+
 
 @Component({
     selector: 'app-dashboard',
@@ -8,8 +8,7 @@ import {pages} from "../../settings/routing";
 })
 
 export class DashboardComponent implements OnInit {
-
-    private _hasSideNav: boolean = pages.dashboard.hasSideNav;
+    // private _hasSideNav: boolean = pages.dashboard.hasSideNav;
 
     constructor() {
 
@@ -19,7 +18,8 @@ export class DashboardComponent implements OnInit {
 
     }
 
-    get hasSideNav(): boolean {
-        return this._hasSideNav;
-    }
+    // get hasSideNav(): boolean {
+    //     return this._hasSideNav;
+    // }
+
 }

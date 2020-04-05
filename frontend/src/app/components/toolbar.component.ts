@@ -1,19 +1,30 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 import {Router} from "@angular/router";
+import {animate, state, style, transition, trigger} from "@angular/animations";
+import {ng_animation} from "../../settings/ng_utils";
 
-import {pages} from "../../settings/routing";
+const animazione_mostra = 'mostra';
+const animazione_nascondi = 'nascondi';
+const animation = new ng_animation(animazione_mostra, animazione_nascondi);
 
 @Component({
     selector: 'app-toolbar',
     templateUrl: '../models/toolbar.component.html',
-    styleUrls: ['../../styles/toolbar.component.sass']
+    styleUrls: ['../../styles/toolbar.component.sass'],
+    animations: [
+        trigger('toggleShowPathAnimation', [
+            state(animazione_nascondi, style({transform: 'rotate(0)'})),
+            state(animazione_mostra, style({transform: 'rotate(-180deg)'})),
+            transition(animation.forward(), animate('350ms ease-out')),
+            transition(animation.reverse(), animate('350ms ease-in'))
+        ])
+    ]
 })
 
 export class ToolbarComponent implements OnInit {
-    @Input() private readonly _hasSideNav: boolean;
-
-    private _showSideNav: boolean = false;
+    @Input() private _showPath: boolean;
+    @Output() private _toggleShowPath: EventEmitter<any> = new EventEmitter();
 
     private readonly _user: {
         name: string
@@ -33,28 +44,21 @@ export class ToolbarComponent implements OnInit {
         return this._user;
     }
 
-    async pushToDashboard() {
-        await this.pushTo(pages.dashboard.path);
-    }
-
     async pushTo(where) {
         await this.router.navigate([where]);
     }
 
     async logout(): Promise<void> {
-        await this.pushTo(pages.login.path);
+        // await this.pushTo(pages.login.path);
     }
 
-    get showSideNav(): boolean {
-        return this._showSideNav;
+    toggleShowPath() {
+        this._showPath = !this._showPath;
+        this._toggleShowPath.emit(this._showPath);
     }
 
-    set showSideNav(value: boolean) {
-        this._showSideNav = value;
-    }
-
-    get hasSideNav(): boolean {
-        return this._hasSideNav;
+    get toggleShowPathAnimation() {
+        return this._showPath ? animazione_mostra : animazione_nascondi;
     }
 
 }

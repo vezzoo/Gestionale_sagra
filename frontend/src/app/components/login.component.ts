@@ -7,7 +7,7 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 
 import {ng_animation} from "../../settings/ng_utils";
 import LoginManager from "../../login/LoginManager";
-import {pages} from "../../settings/routing";
+import {getPath} from "../../settings/routing";
 
 const animazione_mostra = 'mostra';
 const animazione_nascondi = 'nascondi';
@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
     }
 
     async pushToDashboard() {
-        await this.router.navigate([pages.dashboard.path]);
+        await this.router.navigate([getPath('ui')]);
     }
 
     async checkIfIsLogged(): Promise<boolean> {

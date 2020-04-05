@@ -1,0 +1,56 @@
+<mat-sidenav-container autosize>
+
+    <app-keyboard-listener (_toggleShowPath)="toggleShowPath($event)" [_showPath]="showPath"></app-keyboard-listener>
+
+    <mat-sidenav
+        mode="side"
+        [opened]="hasSideNav"
+        [@toggleSidenavState]="toggleSidenavState()"
+    >
+
+        <mat-toolbar class="toolbar">
+
+            <div class="logo-pic" (click)="pushToDashboard()"></div>
+
+        </mat-toolbar>
+
+        <mat-list>
+
+            <mat-list-item *ngFor="let page of pages">
+
+                <div class="item"
+                     [routerLink]="[page.path]"
+                     matTooltip="{{getCapsName(page.path)}}"
+                     [matTooltipPosition]="position.value"
+                >
+
+                    <div class="item-ico">
+                        <button mat-icon-button matSuffix class="centered-ico"
+                                type="button">
+                            <mat-icon>{{page.icon}}</mat-icon>
+                        </button>
+                    </div>
+
+                    <div class="item-text" [@animateText]="animateText()">
+                        <p class="text description">{{getCapsName(page.path)}}</p>
+                    </div>
+
+                    <div class="placeholder"></div>
+
+                </div>
+
+            </mat-list-item>
+
+        </mat-list>
+
+    </mat-sidenav>
+
+    <mat-sidenav-content [@toggleContentState]="{value: toggleSidenavState(), params: {marginLeft: calculateMarginLeft()}}">
+
+        <app-toolbar (_toggleShowPath)="toggleShowPath($event)" [_showPath]="showPath"></app-toolbar>
+
+        <router-outlet></router-outlet>
+
+    </mat-sidenav-content>
+
+</mat-sidenav-container>
