@@ -22,8 +22,12 @@ export class MainLoop {
 
 import utils_ping from "./utils/ping";
 import DatabaseInterface from "./database/DatabaseInterface";
+import MyModel from "./database/files/MyModel.model";
 (async function(mainloop: MainLoop) {
-    await DatabaseInterface.getDatabase().connect();
+    await DatabaseInterface.getDatabase().connect()
+        .then((db) => db.addModel(MyModel));
+
+
     await mainloop.exec();
 })(
     new MainLoop()

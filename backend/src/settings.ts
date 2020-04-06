@@ -11,3 +11,5 @@ export const DATABASE_DB_NAME = 'gestionale';
 export const DATABASE_USERNAME = 'root';
 export const DATABASE_PASSWORD = 'toor';
 export const DATABASE_HOST = 'localhost';
+
+export const DATABASE_REBUILD = !!!false;
