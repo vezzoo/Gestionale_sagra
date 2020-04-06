@@ -6,6 +6,7 @@
         mode="side"
         [opened]="hasSideNav"
         [@toggleSidenavState]="toggleSidenavState()"
+        class="sidenav"
     >
 
         <mat-toolbar class="toolbar">
@@ -20,7 +21,7 @@
 
                 <div class="item"
                      [routerLink]="[page.path]"
-                     matTooltip="{{getCapsName(page.path)}}"
+                     matTooltip="{{getPageName(page.path)}}"
                      [matTooltipPosition]="position.value"
                 >
 
@@ -32,7 +33,7 @@
                     </div>
 
                     <div class="item-text" [@animateText]="animateText()">
-                        <p class="text description">{{getCapsName(page.path)}}</p>
+                        <p class="text description">{{getPageName(page.path)}}</p>
                     </div>
 
                     <div class="placeholder"></div>
@@ -42,6 +43,12 @@
             </mat-list-item>
 
         </mat-list>
+
+        <div class="nome-div">
+
+            <p class="nome-text">{{getUserName()}}</p>
+
+        </div>
 
     </mat-sidenav>
 

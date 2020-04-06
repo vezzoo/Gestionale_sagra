@@ -1,17 +1,41 @@
 @import "variables"
 
 .container
-    width: 100vw
     height: 100vh - $toolbarHeight
     margin: 0
     padding: 0
-    min-height: 100vh
-    display: -webkit-box
-    display: -webkit-flex
-    display: -moz-box
-    display: -ms-flexbox
     display: flex
     flex-wrap: wrap
     justify-content: center
     align-items: center
-    background-color: green
+
+.dashboard-wrapper
+    width: 80vw
+    height: 85vh
+
+.cards-wrapper
+    margin: 0 0 5vh 0
+
+.display
+    display: flex
+
+.cat-title
+    font-size: 20pt
+    margin: 0 0 2vh 0
+
+.card
+    width: 20%
+    height: 15vh
+    margin: 0 2vw
+    padding: 0 !important
+    position: relative
+
+.card-title
+    padding: 1.6vh 0 0 1vw
+    font-size: 15pt
+
+.card-ico
+    position: absolute
+    right: 1vw
+    bottom: 2vh
+    font-size: 50pt

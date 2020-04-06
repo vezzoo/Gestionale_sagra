@@ -7,6 +7,8 @@ import {TooltipPosition} from "@angular/material/tooltip";
 import {FormControl} from "@angular/forms";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {ng_animation} from "../../settings/ng_utils";
+import {split} from "ts-node";
+import {getPageNameFromPath} from "../utility/sharedFunctions";
 
 const animazione_testo_mostra = 'show';
 const animazione_testo_nascondi = 'hide';
@@ -38,7 +40,7 @@ const animation = new ng_animation(animazione_open, animazione_close);
         trigger('toggleSidenavState', [
             state(animazione_open,
                 style({
-                    'min-width': '8.3vw' //161px (1920x1080)
+                    'min-width': '9.9vw' //190px (1920x1080)
                 })
             ),
             state(animazione_close,
@@ -52,7 +54,7 @@ const animation = new ng_animation(animazione_open, animazione_close);
         trigger('toggleContentState', [
             state(animazione_open,
                 style({
-                    'margin-left': '8.3vw' //161px (1920x1080)
+                    'margin-left': '9.9vw' //190px (1920x1080)
                 })
             ),
             state(animazione_close,
@@ -75,6 +77,7 @@ export class UserinterfaceComponent implements OnInit {
         path: string,
         isInSideNav: boolean,
         hasSideNav: boolean,
+        category: string,
         icon: string,
         hierarchy: {
             hasParent: boolean,
@@ -86,9 +89,17 @@ export class UserinterfaceComponent implements OnInit {
     private _showPath: boolean;
     private showText: boolean;
 
+    private readonly _user: {
+        name: string
+    };
+
     constructor(private router: Router) {
         this._showPath = false;
         this.showText = false;
+
+        this._user = {
+            name: "Pierangelo"
+        };
     }
 
     ngOnInit(): void {
@@ -101,6 +112,13 @@ export class UserinterfaceComponent implements OnInit {
 
     get hasSideNav(): boolean {
         return this._hasSideNav;
+    }
+
+    getUserName(): string {
+        if (!this.showText)
+            return this._user.name.charAt(0).toUpperCase();
+
+        return this._user.name;
     }
 
     async pushToDashboard() {
@@ -122,8 +140,8 @@ export class UserinterfaceComponent implements OnInit {
             this.showText = state;
     }
 
-    getCapsName(path: string): string {
-        return path.charAt(0).toUpperCase() + path.slice(1);
+    getPageName(path: string): string {
+        return getPageNameFromPath(path);
     }
 
     get position(): FormControl {

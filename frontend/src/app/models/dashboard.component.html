@@ -1,1 +1,27 @@
-<p>DASHBOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARD</p>
+<div class="container">
+
+    <div class="dashboard-wrapper">
+
+        <div *ngFor="let cat of categories" class="cards-wrapper">
+
+            <p class="text cat-title"><strong>{{getCatName(cat)}}</strong></p>
+
+            <div class="display">
+
+                <mat-card *ngFor="let page of getPages(cat)" class="card">
+
+                    <p class="text card-title">{{getPageNameFromObj(page)}}</p>
+
+                    <div class="card-ico">
+                        <mat-icon [inline]="true">{{page.icon}}</mat-icon>
+                    </div>
+
+                </mat-card>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

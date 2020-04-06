@@ -3,6 +3,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Router} from "@angular/router";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {ng_animation} from "../../settings/ng_utils";
+import {getPath} from "../../settings/routing";
 
 const animazione_mostra = 'mostra';
 const animazione_nascondi = 'nascondi';
@@ -26,22 +27,12 @@ export class ToolbarComponent implements OnInit {
     @Input() private _showPath: boolean;
     @Output() private _toggleShowPath: EventEmitter<any> = new EventEmitter();
 
-    private readonly _user: {
-        name: string
-    };
-
     constructor(private router: Router) {
-        this._user = {
-            name: "Luca"
-        };
+
     }
 
     ngOnInit(): void {
 
-    }
-
-    get user(): { name: string } {
-        return this._user;
     }
 
     async pushTo(where) {
@@ -49,7 +40,7 @@ export class ToolbarComponent implements OnInit {
     }
 
     async logout(): Promise<void> {
-        // await this.pushTo(pages.login.path);
+        await this.pushTo(getPath('login'));
     }
 
     toggleShowPath() {
