@@ -47,7 +47,7 @@
 
     <mat-sidenav-content [@toggleContentState]="{value: toggleSidenavState(), params: {marginLeft: calculateMarginLeft()}}">
 
-        <app-toolbar (_toggleShowPath)="toggleShowPath($event)" [_showPath]="showPath"></app-toolbar>
+        <app-toolbar (_toggleShowPath)="toggleShowPath($event)" [_showPath]="showPath" [_hasSidenav]="hasSideNav"></app-toolbar>
 
         <router-outlet></router-outlet>
 

@@ -23,6 +23,7 @@ const animation = new ng_animation(animazione_mostra, animazione_nascondi);
 })
 
 export class ToolbarComponent implements OnInit {
+    @Input() private _hasSidenav: boolean;
     @Input() private _showPath: boolean;
     @Output() private _toggleShowPath: EventEmitter<any> = new EventEmitter();
 
@@ -42,6 +43,10 @@ export class ToolbarComponent implements OnInit {
 
     get user(): { name: string } {
         return this._user;
+    }
+
+    get hasSidenav(): boolean {
+        return this._hasSidenav;
     }
 
     async pushTo(where) {

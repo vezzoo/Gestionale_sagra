@@ -2,7 +2,7 @@
 
     <mat-toolbar-row class="toolbar-row">
 
-        <div class="left-align" [@toggleShowPathAnimation]="toggleShowPathAnimation">
+        <div *ngIf="hasSidenav" class="left-align" [@toggleShowPathAnimation]="toggleShowPathAnimation">
             <button mat-icon-button matSuffix (click)="toggleShowPath()" type="button">
                 <mat-icon>{{'keyboard_arrow_right'}}</mat-icon>
             </button>
