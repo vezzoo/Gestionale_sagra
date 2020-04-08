@@ -32,9 +32,6 @@ export default class User extends Model implements DBModel {
             let changed = a.changed();
             if (changed && changed.indexOf('password') > -1) generate_user(a, !!a.enabled);
         });
-
-        console.log("User refs")
-
     }
 
     __seq_opt(): any {

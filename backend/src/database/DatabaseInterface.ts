@@ -15,7 +15,7 @@ import DbModel from "./DBModel";
 
 export default class DatabaseInterface extends Sequelize {
     private static database_singleton: DatabaseInterface | null = null;
-    private models_available: DbModel[];
+    private models_available: {instance: DbModel, modelType: any}[];
 
     private constructor() {
         if (DATABASE_USE_URL) super(DATABASE_URL);
@@ -56,18 +56,7 @@ export default class DatabaseInterface extends Sequelize {
             sequelize: this
         }));
 
-        try {
-            if (DATABASE_REBUILD) {
-                await modelType.drop();
-                throw Error("recreate");
-            }
-            await modelType.findAll({limit: 1});
-        } catch (e) {
-            if (e.message !== "recreate") console.error(`ERROR TRYING TO FETCH TABLE ${modelType.name}. RECREATING.`);
-            else console.warn(`Rebuilding ${modelType.name}`);
-            await modelType.sync()
-        }
-        this.models_available.push(i);
+        this.models_available.push({instance: i, modelType});
         console.log(`LOADED ${modelType.name}`);
         return this;
     }
@@ -79,7 +68,20 @@ export default class DatabaseInterface extends Sequelize {
     }
 
     async finalize(): Promise<void>{
-        this.models_available.forEach(e => e.references());
+       for(let e of this.models_available){
+            e.instance.references();
+            try {
+                if (DATABASE_REBUILD) {
+                    await e.modelType.drop();
+                    throw Error("recreate");
+                }
+                await e.modelType.findAll({limit: 1});
+            } catch (ex) {
+                if (ex.message !== "recreate") console.error(`ERROR TRYING TO FETCH TABLE ${e.modelType.name}. RECREATING.`);
+                else console.warn(`Rebuilding ${e.modelType.name}`);
+                await e.modelType.sync()
+            }
+        }
         console.log("DATABASE READY.")
     }
 
