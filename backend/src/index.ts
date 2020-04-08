@@ -28,6 +28,7 @@ import UserPermission from "./database/files/Permissions.model";
     await DatabaseInterface.getDatabase().connect()
         .then((db) => db.addModel(UserPermission))
         .then((db) => db.addModel(User))
+        .then((db) => db.finalize());
 
     await mainloop.exec();
 })(
