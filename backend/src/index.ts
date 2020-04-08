@@ -26,8 +26,8 @@ import User from "./database/files/Users.model";
 import UserPermission from "./database/files/Permissions.model";
 (async function(mainloop: MainLoop) {
     await DatabaseInterface.getDatabase().connect()
+        .then((db) => db.addModel(UserPermission))
         .then((db) => db.addModel(User))
-        .then((db) => db.addModel(UserPermission));
 
     await mainloop.exec();
 })(

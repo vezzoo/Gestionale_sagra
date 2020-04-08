@@ -1,6 +1,7 @@
 import {DataTypes, Model} from "sequelize";
 import Field from "../Field";
 import DBModel from "../DBModel";
+import User from "./Users.model";
 
 export default class UserPermission extends Model implements DBModel{
 
@@ -8,7 +9,7 @@ export default class UserPermission extends Model implements DBModel{
     public group: string | Field = new Field(DataTypes.STRING(32)).primaryKey().allowNull(false);
 
     references(): void{
-
+        UserPermission.belongsTo(User, {targetKey: 'username'});
     }
 
     __seq_opt(): any {
