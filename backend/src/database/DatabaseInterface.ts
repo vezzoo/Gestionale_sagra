@@ -11,9 +11,11 @@ import {
     DATABASE_USERNAME
 } from "../settings";
 import Field from "./Field";
+import DbModel from "./DBModel";
 
 export default class DatabaseInterface extends Sequelize {
     private static database_singleton: DatabaseInterface | null = null;
+    private models_available: DbModel[];
 
     private constructor() {
         if (DATABASE_USE_URL) super(DATABASE_URL);
@@ -22,6 +24,8 @@ export default class DatabaseInterface extends Sequelize {
                 host: DATABASE_HOST,
                 dialect: DATABASE_DIALECT
             });
+
+        this.models_available = [];
     }
 
     public static getDatabase(): DatabaseInterface {
@@ -63,7 +67,7 @@ export default class DatabaseInterface extends Sequelize {
             else console.warn(`Rebuilding ${modelType.name}`);
             await modelType.sync()
         }
-        i.references();
+        this.models_available.push(modelType);
         i = null;
         console.log(`LOADED ${modelType.name}`);
         return this;
@@ -73,6 +77,11 @@ export default class DatabaseInterface extends Sequelize {
         await this.authenticate();
         console.log(await this.databaseVersion());
         return this
+    }
+
+    async finalize(): Promise<void>{
+        this.models_available.forEach(e => e.references());
+        console.log("DATABASE READY.")
     }
 
 }
