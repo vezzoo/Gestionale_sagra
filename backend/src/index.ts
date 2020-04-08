@@ -24,16 +24,20 @@ import utils_ping from "./utils/ping";
 import DatabaseInterface from "./database/DatabaseInterface";
 import User from "./database/files/Users.model";
 import UserPermission from "./database/files/Permissions.model";
+import users from "./utils/users";
 (async function(mainloop: MainLoop) {
-    await DatabaseInterface.getDatabase().connect()
+    await (DatabaseInterface.getDatabase().connect()
         .then((db) => db.addModel(UserPermission))
         .then((db) => db.addModel(User))
-        .then((db) => db.finalize());
+        .then((db) => db.finalize()));
+
+
 
     await mainloop.exec();
 })(
     new MainLoop()
         .add(utils_ping)
+        .add(users)
 );
 
 

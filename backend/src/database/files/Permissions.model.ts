@@ -20,4 +20,7 @@ export default class UserPermission extends Model implements DBModel{
     __table_name(): string {
         return "Permissions";
     }
+
+    describe(): any {
+    }
 }

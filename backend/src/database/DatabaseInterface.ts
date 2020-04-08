@@ -15,7 +15,7 @@ import DbModel from "./DBModel";
 
 export default class DatabaseInterface extends Sequelize {
     private static database_singleton: DatabaseInterface | null = null;
-    private models_available: {instance: DbModel, modelType: any}[];
+    private models_available: {instance: DbModel, modelType: any, fields: string[]}[];
 
     private constructor() {
         if (DATABASE_USE_URL) super(DATABASE_URL);
@@ -46,7 +46,6 @@ export default class DatabaseInterface extends Sequelize {
                         [elm]: Object.getOwnPropertyDescriptor(i, elm)?.value.obj
                     }), {}
             );
-        console.log(fields);
 
         modelType.init(fields, Object.assign(i.__seq_opt(), {
             timestamps: false,
@@ -56,7 +55,7 @@ export default class DatabaseInterface extends Sequelize {
             sequelize: this
         }));
 
-        this.models_available.push({instance: i, modelType});
+        this.models_available.push({instance: i, modelType, fields: Object.keys(fields)});
         console.log(`LOADED ${modelType.name}`);
         return this;
     }
