@@ -24,7 +24,7 @@ export default class Field{
         validate?: any
     } = {};
 
-    constructor(typ: AbstractDataType) {
+    constructor(typ: AbstractDataType | AbstractDataTypeConstructor) {
         this._obj.type = typ;
     }
 
