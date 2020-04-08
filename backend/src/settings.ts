@@ -13,3 +13,5 @@ export const DATABASE_PASSWORD = 'toor';
 export const DATABASE_HOST = 'localhost';
 
 export const DATABASE_REBUILD = !!!false;
+
+export const USER_CREATION_DISABLE = true;
