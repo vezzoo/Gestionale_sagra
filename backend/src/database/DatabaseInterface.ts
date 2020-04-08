@@ -44,11 +44,11 @@ export default class DatabaseInterface extends Sequelize {
             );
         console.log(fields);
 
-        modelType.init(fields, Object.assign(i.__seq_opt, {
+        modelType.init(fields, Object.assign(i.__seq_opt(), {
             timestamps: false,
             underscored: true,
             freezeTableName: true,
-            tableName: i.__table_name,
+            tableName: i.__table_name(),
             sequelize: this
         }));
 
