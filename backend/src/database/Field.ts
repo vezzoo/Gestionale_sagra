@@ -3,12 +3,12 @@ import {AbstractDataType, AbstractDataTypeConstructor} from "sequelize/types/lib
 import {Model} from "sequelize";
 
 export default class Field{
-    get obj(): { type?: AbstractDataType; allowNull?: boolean; defaultValue?: any; unique?: boolean | string; primaryKey?: boolean; field?: string; autoIncrement?: boolean; autoIncrementIdent?: number; comment?: string | null; onUpdate?: string; onDelete?: string; get?: any; set?: any; validate?: any } {
+    get obj(): { type?: AbstractDataType | AbstractDataTypeConstructor; allowNull?: boolean; defaultValue?: any; unique?: boolean | string; primaryKey?: boolean; field?: string; autoIncrement?: boolean; autoIncrementIdent?: number; comment?: string | null; onUpdate?: string; onDelete?: string; get?: any; set?: any; validate?: any } {
         return this._obj;
     }
 
     private _obj: {
-        type?: AbstractDataType
+        type?: AbstractDataType | AbstractDataTypeConstructor
         allowNull?: boolean, //true
         defaultValue?: any, //null
         unique?: boolean | string //false
