@@ -5,11 +5,11 @@ import User from "./Users.model";
 
 export default class UserPermission extends Model implements DBModel{
 
-    public username: string | Field = new Field(DataTypes.STRING(128)).primaryKey().allowNull(false);
-    public group: string | Field = new Field(DataTypes.STRING(32)).primaryKey().allowNull(false);
+    public group: string | Field = new Field(DataTypes.STRING(32)).allowNull(false);
 
     references(): void{
-        UserPermission.belongsTo(User, {targetKey: 'username'});
+        console.log("Permissions refs");
+        UserPermission.belongsTo(User);
     }
 
     __seq_opt(): any {

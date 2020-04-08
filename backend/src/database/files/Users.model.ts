@@ -33,11 +33,8 @@ export default class User extends Model implements DBModel {
             if (changed && changed.indexOf('password') > -1) generate_user(a, !!a.enabled);
         });
 
-        User.hasMany(UserPermission, {
-            sourceKey: 'username',
-            foreignKey: 'username',
-            as: 'user_permissions' // this determines the name in `associations`!
-        });
+        console.log("User refs")
+
     }
 
     __seq_opt(): any {
