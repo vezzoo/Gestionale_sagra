@@ -8,7 +8,10 @@
 
             <div class="display">
 
-                <mat-card *ngFor="let page of getPages(cat)" class="card">
+                <mat-card *ngFor="let page of getPages(cat)"
+                          class="card"
+                          [routerLink]="['../' + page.path]"
+                >
 
                     <p class="text card-title">{{getPageNameFromObj(page)}}</p>
 

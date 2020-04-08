@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {categories, getPagesOfCategory} from "../../settings/routing";
-import {getPageNameFromPath} from "../utility/sharedFunctions";
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {getPageNameFromPath, pushTo} from "../utility/sharedFunctions";
+import {Router} from "@angular/router";
+import {pages, categories, getPagesOfCategory} from "../../settings/routing";
 
 @Component({
     selector: 'app-dashboard',
@@ -9,16 +10,17 @@ import {getPageNameFromPath} from "../utility/sharedFunctions";
 })
 
 export class DashboardComponent implements OnInit {
-
+    @Output() _hasSidenav: EventEmitter<any> = new EventEmitter();
     private _categories;
 
-    constructor() {
-
+    constructor(private router: Router) {
+        this._categories = {};
     }
 
     ngOnInit(): void {
-        this._categories = {};
-        for (let cat of categories)
+        this._hasSidenav.emit(pages.dashboard.hasSideNav);
+
+        for (let cat of Object.keys(categories))
             this._categories[cat] = getPagesOfCategory(cat);
     }
 

@@ -2,16 +2,31 @@
 
     <mat-toolbar-row class="toolbar-row">
 
-        <div *ngIf="hasSidenav" class="left-align" [@toggleShowPathAnimation]="toggleShowPathAnimation">
-            <button mat-icon-button matSuffix (click)="toggleShowPath()" type="button">
-                <mat-icon>{{'keyboard_arrow_right'}}</mat-icon>
-            </button>
+        <div class="left-toolbar">
+
+            <div class="left-component" *ngIf="hasSidenav" [@toggleShowPathAnimation]="toggleShowPathAnimation">
+                <button mat-icon-button matSuffix (click)="toggleShowPath()" type="button">
+                    <mat-icon>{{'keyboard_arrow_right'}}</mat-icon>
+                </button>
+            </div>
+
         </div>
 
-        <div class="right-align">
-            <button mat-icon-button matSuffix (click)="logout()" type="button">
+        <div class="center-toolbar">
+
+        </div>
+
+        <div class="right-toolbar">
+
+            <button mat-icon-button matSuffix
+                    (click)="logout()" type="button"
+                    matTooltip="Logout"
+                    [matTooltipPosition]="position.value"
+                    class="right-component"
+            >
                 <mat-icon>{{'logout'}}</mat-icon>
             </button>
+
         </div>
 
     </mat-toolbar-row>

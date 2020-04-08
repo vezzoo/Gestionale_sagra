@@ -1,3 +1,5 @@
+// import {getPath} from "../../settings/routing.ts";
+
 function hasUpperCase(string: string): number {
     for (let i = 0; i < string.length; i++) {
         let char = string.charAt(i);
@@ -22,4 +24,8 @@ export function getPageNameFromPath(path: string): string {
         path = adjustString(path, indexOfUppCase, path.charAt(indexOfUppCase).toLowerCase());
 
     return path.charAt(0).toUpperCase() + path.slice(1);
+}
+
+export async function pushTo(router, path) {
+    await router.navigate([path]);
 }

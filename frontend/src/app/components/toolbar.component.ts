@@ -1,25 +1,18 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 import {Router} from "@angular/router";
-import {animate, state, style, transition, trigger} from "@angular/animations";
-import {ng_animation} from "../../settings/ng_utils";
-import {getPath} from "../../settings/routing";
-
-const animazione_mostra = 'mostra';
-const animazione_nascondi = 'nascondi';
-const animation = new ng_animation(animazione_mostra, animazione_nascondi);
+import {TooltipPosition} from "@angular/material/tooltip";
+import {FormControl} from "@angular/forms";
+import {pushTo} from "../utility/sharedFunctions";
+import {toggleShowPathAnimation, animazione_mostra, animazione_nascondi} from "../animations/toolbar/toggleShowPathAnimation";
+import {pages} from "../../settings/routing";
 
 @Component({
     selector: 'app-toolbar',
     templateUrl: '../models/toolbar.component.html',
     styleUrls: ['../../styles/toolbar.component.sass'],
     animations: [
-        trigger('toggleShowPathAnimation', [
-            state(animazione_nascondi, style({transform: 'rotate(0)'})),
-            state(animazione_mostra, style({transform: 'rotate(-180deg)'})),
-            transition(animation.forward(), animate('350ms ease-out')),
-            transition(animation.reverse(), animate('350ms ease-in'))
-        ])
+        toggleShowPathAnimation
     ]
 })
 
@@ -27,6 +20,9 @@ export class ToolbarComponent implements OnInit {
     @Input() private _hasSidenav: boolean;
     @Input() private _showPath: boolean;
     @Output() private _toggleShowPath: EventEmitter<any> = new EventEmitter();
+
+    private positionOptions: TooltipPosition[] = ['after', 'before', 'above', 'below', 'left', 'right'];
+    private _position = new FormControl(this.positionOptions[3]);
 
     constructor(private router: Router) {
 
@@ -40,12 +36,8 @@ export class ToolbarComponent implements OnInit {
         return this._hasSidenav;
     }
 
-    async pushTo(where) {
-        await this.router.navigate([where]);
-    }
-
     async logout(): Promise<void> {
-        await this.pushTo(getPath('login'));
+        await pushTo(this.router, pages.login.path);
     }
 
     toggleShowPath() {
@@ -57,4 +49,7 @@ export class ToolbarComponent implements OnInit {
         return this._showPath ? animazione_mostra : animazione_nascondi;
     }
 
+    get position(): FormControl {
+        return this._position;
+    }
 }

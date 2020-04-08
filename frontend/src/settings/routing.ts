@@ -1,150 +1,35 @@
-const categoriesName = {
-    servizi: 'servizi',
-    gestione: 'gestione',
-    amministrazione: 'amministrazione'
-};
+import * as pagesImported from "./pages_description/pagesDescription";
+import categoriesImported from "./pages_description/categories";
 
-export let categories: any[] = populateCategories();
+export const categories = categoriesImported;
 
-const pages = [
-    {
-        path: 'login',
-        isInSideNav: false,
-        hasSideNav: false,
-        category: '',
-        icon: '',
-        hierarchy: {
-            hasParent: false,
-            parentURL: ""
-        }
-    },
-    {
-        path: 'ui',
-        isInSideNav: false,
-        hasSideNav: false,
-        category: '',
-        icon: '',
-        hierarchy: {
-            hasParent: false,
-            parentURL: ""
-        }
-    },
-    {
-        path: 'dashboard',
-        isInSideNav: true,
-        hasSideNav: false,
-        category: '',
-        icon: 'dashboard',
-        hierarchy: {
-            hasParent: true,
-            parentURL: "ui"
-        }
-    },
-    {
-        path: 'cassa',
-        isInSideNav: true,
-        hasSideNav: true,
-        category: categoriesName.servizi,
-        icon: 'local_atm',
-        hierarchy: {
-            hasParent: true,
-            parentURL: "ui"
-        }
-    },
-    {
-        path: 'magazzino',
-        isInSideNav: true,
-        hasSideNav: true,
-        category: categoriesName.gestione,
-        icon: 'business',
-        hierarchy: {
-            hasParent: true,
-            parentURL: "ui"
-        }
-    },
-    {
-        path: 'storico',
-        isInSideNav: true,
-        hasSideNav: true,
-        category: categoriesName.gestione,
-        icon: 'library_add_check',
-        hierarchy: {
-            hasParent: true,
-            parentURL: "ui"
-        }
-    },
-    {
-        path: 'statistiche',
-        isInSideNav: true,
-        hasSideNav: true,
-        category: categoriesName.gestione,
-        icon: 'insert_chart_outlined',
-        hierarchy: {
-            hasParent: true,
-            parentURL: "ui"
-        }
-    },
-    {
-        path: 'gestioneUtenti',
-        isInSideNav: true,
-        hasSideNav: true,
-        category: categoriesName.amministrazione,
-        icon: 'supervised_user_circle',
-        hierarchy: {
-            hasParent: true,
-            parentURL: "ui"
-        }
-    }
-];
+export const pages = getPages();
 
-function populateCategories() {
-    let categories = [];
-    Object.keys(categoriesName).forEach(cat => categories.push(cat))
-    return categories;
+function getPages(): any {
+    let pages = {};
+
+    for (let page of Object.keys(pagesImported))
+        pages[page] = pagesImported[page];
+
+    return pages;
 }
 
-export function getPath(path): string {
-    let filtered = pages.filter(e => e.path === path);
+export function getPagesInSideNav(): any {
+    const pagesNames = Object.keys(pages).filter(e => pages[e].isInSideNav);
+    let toReturn = [];
 
-    if (filtered.length !== 1)
-        return "";
+    for (let page of pagesNames)
+        toReturn.push(pages[page]);
 
-    return filtered[0].path;
+    return toReturn;
 }
 
-export function pageHasSideNav(path) {
-    let filtered = pages.filter(e => e.path === path);
+export function getPagesOfCategory(cat: string): any {
+    const pagesNames = Object.keys(pages).filter(e => pages[e].category.toLowerCase() === cat.toLowerCase());
+    let toReturn = [];
 
-    if (filtered.length !== 1)
-        return false;
+    for (let page of pagesNames)
+        toReturn.push(pages[page]);
 
-    return filtered[0].hasSideNav;
-}
-
-export function getPagesInSideNav(): {
-    path: string,
-    isInSideNav: boolean,
-    hasSideNav: boolean,
-    category: string,
-    icon: string,
-    hierarchy: {
-        hasParent: boolean,
-        parentURL: string
-    }
-}[] {
-    return pages.filter(e => e.isInSideNav)
-}
-
-export function getPagesOfCategory(cat: string): {
-    path: string,
-    isInSideNav: boolean,
-    hasSideNav: boolean,
-    category: string,
-    icon: string,
-    hierarchy: {
-        hasParent: boolean,
-        parentURL: string
-    }
-}[] {
-    return pages.filter(e => e.category.toLowerCase() === cat.toLowerCase());
+    return toReturn;
 }

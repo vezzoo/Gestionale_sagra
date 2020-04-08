@@ -3,31 +3,18 @@ import {Component, OnInit,} from '@angular/core';
 import {Router} from "@angular/router";
 
 import {FormBuilder} from '@angular/forms';
-import {animate, state, style, transition, trigger} from "@angular/animations";
 
-import {ng_animation} from "../../settings/ng_utils";
 import LoginManager from "../../login/LoginManager";
-import {getPath} from "../../settings/routing";
-
-const animazione_mostra = 'mostra';
-const animazione_nascondi = 'nascondi';
-const animation = new ng_animation(animazione_mostra, animazione_nascondi);
+import {pushTo} from "../utility/sharedFunctions";
+import {errorLoginText, animazione_mostra, animazione_nascondi} from "../animations/login/errorLoginText";
+import {pages} from "../../settings/routing";
 
 @Component({
     selector: 'app-login',
     templateUrl: '../models/login.component.html',
     styleUrls: ['../../styles/login.component.sass'],
     animations: [
-        trigger('errorLoginText', [
-            state(animazione_mostra, style({
-                opacity: 1
-            })),
-            state(animazione_nascondi, style({
-                opacity: 0
-            })),
-            transition(animation.forward(), animate('500ms ease-out')),
-            transition(animation.reverse(), animate('600ms ease-in'))
-        ]),
+        errorLoginText
     ]
 })
 
@@ -47,7 +34,7 @@ export class LoginComponent implements OnInit {
     }
 
     async pushToDashboard() {
-        await this.router.navigate([getPath('ui')]);
+        await pushTo(this.router, pages.ui.path);
     }
 
     async checkIfIsLogged(): Promise<boolean> {

@@ -11,7 +11,7 @@
 
         <mat-toolbar class="toolbar">
 
-            <div class="logo-pic" (click)="pushToDashboard()"></div>
+            <div class="logo-pic" [routerLink]="[getDashboardPath()]"></div>
 
         </mat-toolbar>
 
@@ -56,7 +56,7 @@
 
         <app-toolbar (_toggleShowPath)="toggleShowPath($event)" [_showPath]="showPath" [_hasSidenav]="hasSideNav"></app-toolbar>
 
-        <router-outlet></router-outlet>
+        <router-outlet (activate)="onActivate($event)"></router-outlet>
 
     </mat-sidenav-content>
 

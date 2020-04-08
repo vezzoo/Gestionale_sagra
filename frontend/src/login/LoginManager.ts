@@ -9,9 +9,9 @@ import {chrome_local_storage_get, chrome_local_storage_set} from "../settings/ch
 
 let singleton_login_manager = null;
 
-export default class LoginManager implements Authenticator{
+export default class LoginManager implements Authenticator {
 
-    private _current_user:UserData = null;
+    private _current_user: UserData = null;
 
     private readonly loc_username = "username";
     private readonly loc_name = "name";
@@ -20,12 +20,13 @@ export default class LoginManager implements Authenticator{
     private readonly loc_token = "tok";
 
     private is_logged = false;
-    private token:string;
+    private token: string;
 
-    constructor() {}
+    constructor() {
+    }
 
-    async load_user(): Promise<void>{
-        if(await chrome_local_storage_get(this.loc_is_logged)) {
+    async load_user(): Promise<void> {
+        if (await chrome_local_storage_get(this.loc_is_logged)) {
             this.is_logged = true;
             this.token = await chrome_local_storage_get(this.loc_token);
             this._current_user = new UserData(
@@ -40,7 +41,7 @@ export default class LoginManager implements Authenticator{
     }
 
     static async getEnvLogin(): Promise<LoginManager> {
-        if (singleton_login_manager == null){
+        if (singleton_login_manager == null) {
             singleton_login_manager = new LoginManager();
             await singleton_login_manager.load_user()
         }
@@ -51,10 +52,10 @@ export default class LoginManager implements Authenticator{
         return await chrome_local_storage_get(this.loc_is_logged) !== null;
     }
 
-    async login(username: string, password: string): Promise<LoginResult>{
+    async login(username: string, password: string): Promise<LoginResult> {
         let login_res = await login.run({"$username": username, "$password": password}, false);
-        if(login_res.response_code === 403) return new LoginResult(false, login_res.data.message);
-        if(login_res.response_code === 200){
+        if (login_res.response_code === 403) return new LoginResult(false, login_res.data.message);
+        if (login_res.response_code === 200) {
             await chrome_local_storage_set(this.loc_username, username);
             await chrome_local_storage_set(this.loc_name, login_res.data.name ?? "UNKNOWN");
             await chrome_local_storage_set(this.loc_permissions, JSON.stringify(login_res.data.permissions));
@@ -66,7 +67,7 @@ export default class LoginManager implements Authenticator{
         return new LoginResult(false, "Unknown error");
     }
 
-    async logout(){
+    async logout() {
         await chrome_local_storage_set(this.loc_username, "");
         await chrome_local_storage_set(this.loc_name, name);
         await chrome_local_storage_set(this.loc_permissions, JSON.stringify([]));
@@ -85,7 +86,7 @@ export default class LoginManager implements Authenticator{
     }
 
     doAuthentication(headers, body, oth): boolean {
-        if(!this.is_logged) return false;
+        if (!this.is_logged) return false;
         headers[authentication_header] = this.token;
         return true;
     }

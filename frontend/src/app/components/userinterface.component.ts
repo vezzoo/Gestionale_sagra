@@ -1,70 +1,24 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 
 import {Router} from "@angular/router";
 
-import {getPagesInSideNav, getPath, pageHasSideNav} from "../../settings/routing";
 import {TooltipPosition} from "@angular/material/tooltip";
 import {FormControl} from "@angular/forms";
-import {animate, state, style, transition, trigger} from "@angular/animations";
-import {ng_animation} from "../../settings/ng_utils";
-import {split} from "ts-node";
-import {getPageNameFromPath} from "../utility/sharedFunctions";
+import {getPageNameFromPath, pushTo} from "../utility/sharedFunctions";
+import {getPagesInSideNav, pages} from "../../settings/routing";
+import {animateText, animazione_testo_mostra, animazione_testo_nascondi} from "../animations/ui/animateText";
+import {toggleContentState, animazione_open, animazione_close} from "../animations/ui/toggleContentState";
+import {toggleSidenavState} from "../animations/ui/toggleSidenavState";
 
-const animazione_testo_mostra = 'show';
-const animazione_testo_nascondi = 'hide';
-const animazione_open = 'open';
-const animazione_close = 'close';
-const animation = new ng_animation(animazione_open, animazione_close);
 
 @Component({
     selector: 'app-userinterface',
     templateUrl: '../models/userinterface.component.html',
     styleUrls: ['../../styles/userinterface.component.sass'],
     animations: [
-        trigger('animateText', [
-            state(animazione_testo_mostra,
-                style({
-                    'display': 'block',
-                    opacity: 1,
-                })
-            ),
-            state(animazione_testo_nascondi,
-                style({
-                    'display': 'none',
-                    opacity: 0,
-                })
-            ),
-            transition(animation.forward(), animate('150ms ease-out')),
-            transition(animation.reverse(), animate('150ms ease-in')),
-        ]),
-        trigger('toggleSidenavState', [
-            state(animazione_open,
-                style({
-                    'min-width': '9.9vw' //190px (1920x1080)
-                })
-            ),
-            state(animazione_close,
-                style({
-                    'min-width': '3.4vw' //65px (1920x1080)
-                })
-            ),
-            transition(animation.forward(), animate('150ms ease-out')),
-            transition(animation.reverse(), animate('150ms ease-in')),
-        ]),
-        trigger('toggleContentState', [
-            state(animazione_open,
-                style({
-                    'margin-left': '9.9vw' //190px (1920x1080)
-                })
-            ),
-            state(animazione_close,
-                style({
-                    'margin-left': '{{marginLeft}}vw'//'3.4vw' //65px (1920x1080)
-                })
-                , {params: {marginLeft: 1}}),
-            transition(animation.forward(), animate('150ms ease-out')),
-            transition(animation.reverse(), animate('150ms ease-in')),
-        ])
+        animateText,
+        toggleContentState,
+        toggleSidenavState
     ]
 })
 
@@ -73,19 +27,9 @@ export class UserinterfaceComponent implements OnInit {
     private positionOptions: TooltipPosition[] = ['after', 'before', 'above', 'below', 'left', 'right'];
     private _position = new FormControl(this.positionOptions[0]);
 
-    private _pages: {
-        path: string,
-        isInSideNav: boolean,
-        hasSideNav: boolean,
-        category: string,
-        icon: string,
-        hierarchy: {
-            hasParent: boolean,
-            parentURL: string
-        }
-    }[] = getPagesInSideNav();
+    private _pages: [];
 
-    private _hasSideNav: boolean = pageHasSideNav('dashboard');
+    private _hasSideNav: boolean;
     private _showPath: boolean;
     private showText: boolean;
 
@@ -93,7 +37,7 @@ export class UserinterfaceComponent implements OnInit {
         name: string
     };
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private cdRef: ChangeDetectorRef) {
         this._showPath = false;
         this.showText = false;
 
@@ -103,7 +47,8 @@ export class UserinterfaceComponent implements OnInit {
     }
 
     ngOnInit(): void {
-
+        this._pages = getPagesInSideNav();
+        this._hasSideNav = true;
     }
 
     get pages(): Array<object> {
@@ -114,6 +59,13 @@ export class UserinterfaceComponent implements OnInit {
         return this._hasSideNav;
     }
 
+    onActivate(componentReference: any): void {
+        componentReference._hasSidenav.subscribe((data) => {
+            this._hasSideNav = data;
+            this.cdRef.detectChanges();
+        })
+    }
+
     getUserName(): string {
         if (!this.showText)
             return this._user.name.charAt(0).toUpperCase();
@@ -121,23 +73,21 @@ export class UserinterfaceComponent implements OnInit {
         return this._user.name;
     }
 
-    async pushToDashboard() {
-        await this.pushTo(getPath('ui'));
-    }
-
-    async pushTo(path: string): Promise<void> {
-        await this.router.navigate([getPath(path)]);
+    getDashboardPath() {
+        return pages.dashboard.path;
     }
 
     toggleShowPath(state: boolean) {
-        this._showPath = state;
+        if (this._hasSideNav) {
+            this._showPath = state;
 
-        if (state)
-            setTimeout(() => {
+            if (state)
+                setTimeout(() => {
+                    this.showText = state;
+                }, 165);
+            else
                 this.showText = state;
-            }, 165);
-        else
-            this.showText = state;
+        }
     }
 
     getPageName(path: string): string {

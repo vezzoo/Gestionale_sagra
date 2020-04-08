@@ -10,11 +10,11 @@ export class AppComponent {
     title = 'gestionale';
 
     ngOnInit() {
-        history.pushState = function (a) {
-
+        history.pushState = function (state, title, url) {
+            // console.log(state, title, url)
         };
-        history.replaceState = function (a) {
-
+        history.replaceState = function (state, title, url) {
+            // console.log(state, title, url)
         };
     }
 }
