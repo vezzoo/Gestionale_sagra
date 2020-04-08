@@ -67,8 +67,7 @@ export default class DatabaseInterface extends Sequelize {
             else console.warn(`Rebuilding ${modelType.name}`);
             await modelType.sync()
         }
-        this.models_available.push(modelType);
-        i = null;
+        this.models_available.push(i);
         console.log(`LOADED ${modelType.name}`);
         return this;
     }
