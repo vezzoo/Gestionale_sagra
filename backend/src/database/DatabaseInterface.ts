@@ -14,7 +14,7 @@ import DbModel from "./DBModel";
 
 export default class DatabaseInterface extends Sequelize {
     private static database_singleton: DatabaseInterface | null = null;
-    private models_available: {instance: DbModel, modelType: any}[];
+    private models_available: any[];
 
     private constructor() {
         if (DATABASE_USE_URL) super(DATABASE_URL);
@@ -34,6 +34,7 @@ export default class DatabaseInterface extends Sequelize {
 
     async addModel(modelType: any): Promise<DatabaseInterface> {
         this.addModels([modelType]);
+        this.models_available.push(modelType);
         return this;
     }
 
@@ -44,7 +45,19 @@ export default class DatabaseInterface extends Sequelize {
     }
 
     async finalize(): Promise<void>{
-
+        for(let e of this.models_available){
+            try {
+                if (DATABASE_REBUILD) {
+                    await e.drop();
+                    throw Error("recreate");
+                }
+                await e.findAll({limit: 1});
+            } catch (ex) {
+                if (ex.message !== "recreate") console.error(`ERROR TRYING TO FETCH TABLE ${e.name}. RECREATING.`);
+                else console.warn(`Rebuilding ${e.name}`);
+                await e.sync()
+            }
+        }
         console.log("DATABASE READY.")
     }
 
