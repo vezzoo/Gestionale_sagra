@@ -9,7 +9,8 @@ echo "export const ${NAME} = {
     isInSideNav: true,
     hasSideNav: true,
     category: '',
-    icon: ''
+    icon: '',
+    requiredPermission: ''
 };" > $NAME.ts
 
 cd ..

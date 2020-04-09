@@ -3,5 +3,6 @@ export const dashboard = {
     isInSideNav: true,
     hasSideNav: false,
     category: '',
-    icon: 'dashboard'
+    icon: 'dashboard',
+    requiredPermission: ''
 };

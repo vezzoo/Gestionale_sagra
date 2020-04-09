@@ -25,7 +25,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatListModule} from '@angular/material/list';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatRadioModule} from '@angular/material/radio';
@@ -49,8 +49,9 @@ import {DashboardComponent} from './components/dashboard.component';
 import {ToolbarComponent} from './components/toolbar.component';
 import {UserinterfaceComponent} from './components/userinterface.component';
 import {CassaComponent} from './components/cassa.component';
-import { KeyboardListenerComponent } from './components/keyboard-listener.component';
-import { GestioneUtentiComponent } from './components/gestione-utenti.component';
+import {KeyboardListenerComponent} from './components/keyboard-listener.component';
+import {GestioneUtentiComponent} from './components/gestione-utenti.component';
+import {getItalianPaginatorIntl} from "./italian-paginator";
 
 const index = 'index.html';
 
@@ -71,7 +72,7 @@ const appRoutes: Routes = [
         children: [
             {
                 path: '',
-                redirectTo: pages.dashboard.path,
+                redirectTo: pages.gestioneUtenti.path,
                 pathMatch: 'full'
             },
             {
@@ -163,7 +164,9 @@ const appRoutes: Routes = [
         MatTooltipModule,
         MatTreeModule
     ],
-    providers: [],
+    providers: [
+        {provide: MatPaginatorIntl, useValue: getItalianPaginatorIntl()}
+    ],
     bootstrap: [AppComponent]
 })
 
