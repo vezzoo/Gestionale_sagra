@@ -31,8 +31,6 @@ import users from "./utils/users";
         .then((db) => db.addModel(User))
         .then((db) => db.finalize()));
 
-
-
     await mainloop.exec();
 })(
     new MainLoop()

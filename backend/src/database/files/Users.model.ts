@@ -42,18 +42,17 @@ export default class User extends Model implements DBModel {
 
     private static generate_user(user: User, enabled_state: boolean) {
         let salt = Math.random().toString(36).substr(2); //11chars salt
-        user.salt = salt;
-        // @ts-ignore
-        user.password = this.generate_db_passw(salt, user.dataValues.password.toString());
-        user.enabled = enabled_state;
+        user.set('salt', salt);
+        user.set('password', this.generate_db_passw(salt, user.get('password').toString()));
+        user.set('enabled', enabled_state);
     }
 
     public authenticate(password: string): void {
-        let reg = new RegExp(AUTHENTICATION_PASSWORD_RULE.join(''), '/g');
+        let reg = new RegExp(AUTHENTICATION_PASSWORD_RULE.join(''), 'g');
         if (!!password.match(reg)?.length) throw Error("PSW RULE NOT MATCHED");
-        if (this.password !== User.generate_db_passw(this.salt.toString(), password)) throw Error("INVALID CREDENTIALS");
-        if (!this.enabled) throw Error("USER NOT ENABLED");
-        this.last_login = Date.now();
+        if (this.get('password') !== User.generate_db_passw(this.get('salt').toString(), password)) throw Error("INVALID CREDENTIALS");
+        if (!this.get('enabled')) throw Error("USER NOT ENABLED");
+        this.set('last_login', Date.now());
         this.save();
     }
 }
