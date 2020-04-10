@@ -3,5 +3,6 @@ export const ui = {
     isInSideNav: false,
     hasSideNav: false,
     category: '',
-    icon: ''
+    icon: '',
+    requiredPermission: ''
 };

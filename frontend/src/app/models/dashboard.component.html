@@ -1,10 +1,10 @@
-<div class="container">
+<div class="ui-child-container">
 
     <div class="dashboard-wrapper">
 
         <div *ngFor="let cat of categories" class="cards-wrapper">
 
-            <p class="text cat-title"><strong>{{getCatName(cat)}}</strong></p>
+            <p *ngIf="showTitle(cat)" class="text cat-title"><strong>{{getCatName(cat)}}</strong></p>
 
             <div class="display">
 

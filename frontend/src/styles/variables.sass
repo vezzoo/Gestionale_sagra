@@ -1,14 +1,3 @@
-//Global
-$font: Arial, Helvetica, sans-serif
-
-$logo: url('../assets/img/NewGestionale3000.svg.png')
-
-$bigLogoSize: 21vw
-$smallLogoSize: 5.5vh
-
-.text
-    font-family: $font
-
 //Login
 $loginBg: url('../assets/img/Bg1.jpg')
 
@@ -36,3 +25,23 @@ $toolbarHeight: 6.4vh
 
 //Sidenav
 $icoRightMargin: .63vw  //12px (1920x1080)
+
+//Global
+$font: Arial, Helvetica, sans-serif
+
+$logo: url('../assets/img/NewGestionale3000.svg.png')
+
+$bigLogoSize: 21vw
+$smallLogoSize: 5.5vh
+
+.text
+    font-family: $font
+
+.ui-child-container
+    height: 100vh - $toolbarHeight
+    margin: 0
+    padding: 0
+    display: flex
+    flex-wrap: wrap
+    justify-content: center
+    align-items: center

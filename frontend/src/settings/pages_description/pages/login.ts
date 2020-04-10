@@ -3,5 +3,6 @@ export const login = {
     isInSideNav: false,
     hasSideNav: false,
     category: '',
-    icon: ''
+    icon: '',
+    requiredPermission: ''
 };
