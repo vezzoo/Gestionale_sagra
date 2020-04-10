@@ -9,6 +9,9 @@ import {getPagesInSideNav, pages} from "../../settings/routing";
 import {animateText, animazione_testo_mostra, animazione_testo_nascondi} from "../animations/ui/animateText";
 import {toggleContentState, animazione_open, animazione_close} from "../animations/ui/toggleContentState";
 import {toggleSidenavState} from "../animations/ui/toggleSidenavState";
+import {Page} from "../interfaces/Page";
+import {User} from "../interfaces/User";
+import permissions from "../../settings/pages_description/permissions";
 
 
 @Component({
@@ -27,28 +30,28 @@ export class UserinterfaceComponent implements OnInit {
     private positionOptions: TooltipPosition[] = ['after', 'before', 'above', 'below', 'left', 'right'];
     private _position = new FormControl(this.positionOptions[0]);
 
-    private _pages: [];
+    private _pages: Page[];
 
     private _hasSideNav: boolean;
     private _showPath: boolean;
     private showText: boolean;
 
-    private readonly _user: {
-        name: string
-    };
+    private _user: User;
 
     constructor(private router: Router, private cdRef: ChangeDetectorRef) {
+        this._user = {
+            name: "Pierangelo",
+            permissions: [permissions.dashboard, permissions.cassa, permissions.utenti]
+        };
+
+        this._pages = getPagesInSideNav(this._user.permissions);
+        this._hasSideNav = true;
         this._showPath = false;
         this.showText = false;
-
-        this._user = {
-            name: "Pierangelo"
-        };
     }
 
     ngOnInit(): void {
-        this._pages = getPagesInSideNav();
-        this._hasSideNav = true;
+
     }
 
     get pages(): Array<object> {
@@ -59,7 +62,13 @@ export class UserinterfaceComponent implements OnInit {
         return this._hasSideNav;
     }
 
+    get user(): User {
+        return this._user;
+    }
+
     onActivate(componentReference: any): void {
+        componentReference.setUser(this._user);
+
         componentReference._hasSidenav.subscribe((data) => {
             this._hasSideNav = data;
             this.cdRef.detectChanges();

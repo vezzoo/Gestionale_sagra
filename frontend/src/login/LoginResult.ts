@@ -7,7 +7,6 @@ export default class LoginResult{
         this._message = message;
     }
 
-
     get success(): boolean {
         return this._success;
     }

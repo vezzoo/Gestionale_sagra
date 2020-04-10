@@ -1,4 +1,5 @@
 export default {
+    dashboard: 'dashboard',
     cassa: 'cassa',
     stampa: 'stampa',
     magazzino: 'magazzino',

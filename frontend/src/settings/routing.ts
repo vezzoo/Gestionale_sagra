@@ -1,5 +1,6 @@
 import * as pagesImported from "./pages_description/pagesDescription";
 import categoriesImported from "./pages_description/categories";
+import {Page} from "../app/interfaces/Page";
 
 export const categories = categoriesImported;
 
@@ -14,22 +15,24 @@ function getPages(): any {
     return pages;
 }
 
-export function getPagesInSideNav(): any {
+export function getPagesInSideNav(permissions: string[]): Page[] {
     const pagesNames = Object.keys(pages).filter(e => pages[e].isInSideNav);
     let toReturn = [];
 
     for (let page of pagesNames)
-        toReturn.push(pages[page]);
+        if (permissions.includes(pages[page].requiredPermission))
+            toReturn.push(pages[page]);
 
     return toReturn;
 }
 
-export function getPagesOfCategory(cat: string): any {
+export function getPagesOfCategory(cat: string, permissions: string[]): Page[] {
     const pagesNames = Object.keys(pages).filter(e => pages[e].category.toLowerCase() === cat.toLowerCase());
     let toReturn = [];
 
     for (let page of pagesNames)
-        toReturn.push(pages[page]);
+        if (permissions.includes(pages[page].requiredPermission))
+            toReturn.push(pages[page]);
 
     return toReturn;
 }

@@ -4,6 +4,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from "@angular/router";
 
 import {ReactiveFormsModule} from "@angular/forms";
+import {AppRoutingModule} from "./app-routing.module";
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
@@ -72,7 +73,7 @@ const appRoutes: Routes = [
         children: [
             {
                 path: '',
-                redirectTo: pages.gestioneUtenti.path,
+                redirectTo: pages.dashboard.path,
                 pathMatch: 'full'
             },
             {
@@ -124,6 +125,7 @@ const appRoutes: Routes = [
     imports: [
         BrowserModule,
         ReactiveFormsModule,
+        AppRoutingModule,
         RouterModule.forRoot(appRoutes
             // , { enableTracing: true }
         ),
