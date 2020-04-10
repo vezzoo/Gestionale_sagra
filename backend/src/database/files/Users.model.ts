@@ -1,38 +1,63 @@
-import {DataTypes, Model} from "sequelize";
-import Field from "../Field";
-import DBModel from "../DBModel";
+import {
+    AllowNull,
+    BeforeCreate,
+    BeforeUpdate,
+    Column,
+    Default,
+    HasMany,
+    PrimaryKey,
+    Table,
+    Model
+} from "sequelize-typescript";
+import {DataTypes} from "sequelize";
 import crypto from 'crypto'
 import {AUTHENTICATION_PASSWORD_RULE, USER_CREATION_DISABLE} from "../../settings";
+import UserPermission from "./Permissions.model";
+import sequelize_fix from "../sequelize_fix";
 
+@Table({
+    timestamps: false,
+    freezeTableName: true,
+    tableName: "Users"
+})
+export default class User extends Model<User>{
 
-export default class User extends Model implements DBModel {
+    @PrimaryKey
+    @AllowNull(false)
+    @Column(DataTypes.STRING(128))
+    public username!: string;
 
-    public username: string | Field = new Field(DataTypes.STRING(128)).primaryKey().allowNull(false);
-    public name: string | Field = new Field(DataTypes.STRING(128)).allowNull(true);
-    public password: string | Field = new Field(DataTypes.STRING(64)).allowNull(false);
-    public enabled: boolean | Field = new Field(DataTypes.BOOLEAN);
-    public salt: string | Field = new Field(DataTypes.STRING(11));
-    public last_login: number | Field = new Field(DataTypes.BIGINT).allowNull();
+    @Column(DataTypes.STRING(128))
+    public name!: string;
 
-    references(): void {
-        console.log("User before creation hook");
-        User.addHook('beforeCreate', (a: User, options) => {
-            User.generate_user(a, !USER_CREATION_DISABLE);
-        });
+    @AllowNull(false)
+    @Column(DataTypes.STRING(80))
+    public password!: string;
 
-        console.log("User before update hook");
-        User.addHook('beforeCreate', (a: User, options) => {
-            let changed = a.changed();
-            if (changed && changed.indexOf('password') > -1) User.generate_user(a, !!a.enabled);
-        });
+    @AllowNull(false)
+    @Default(false)
+    @Column(DataTypes.BOOLEAN)
+    public enabled!: boolean;
+
+    @Column(DataTypes.STRING(11))
+    public salt!: string;
+
+    @Column(DataTypes.BIGINT)
+    public last_login!: number;
+
+    @HasMany(() => UserPermission)
+    // @ts-ignore
+    public permissions: UserPermission[] = this.permissions;
+
+    @BeforeCreate
+    private static hash_password(instance: User){
+        User.generate_user(instance, !USER_CREATION_DISABLE);
     }
 
-    __seq_opt(): any {
-        return {underscored: true}
-    }
-
-    __table_name(): string {
-        return "Users";
+    @BeforeUpdate
+    private static update_password(instance:User){
+        let changed = instance.changed();
+        if (changed && changed.indexOf('password') > -1) User.generate_user(instance, !!instance.enabled);
     }
 
     private static generate_db_passw(salt: string, password: string): string {
@@ -42,17 +67,22 @@ export default class User extends Model implements DBModel {
 
     private static generate_user(user: User, enabled_state: boolean) {
         let salt = Math.random().toString(36).substr(2); //11chars salt
-        user.set('salt', salt);
-        user.set('password', this.generate_db_passw(salt, user.get('password').toString()));
-        user.set('enabled', enabled_state);
+        user.salt = salt;
+        user.password = this.generate_db_passw(salt, user.get('password').toString());
+        user.enabled =  enabled_state;
     }
 
     public authenticate(password: string): void {
         let reg = new RegExp(AUTHENTICATION_PASSWORD_RULE.join(''), 'g');
         if (!!password.match(reg)?.length) throw Error("PSW RULE NOT MATCHED");
-        if (this.get('password') !== User.generate_db_passw(this.get('salt').toString(), password)) throw Error("INVALID CREDENTIALS");
-        if (!this.get('enabled')) throw Error("USER NOT ENABLED");
-        this.set('last_login', Date.now());
+        if (this.password !== User.generate_db_passw(this.salt, password)) throw Error("INVALID CREDENTIALS");
+        if (!this.enabled) throw Error("USER NOT ENABLED");
+        this.last_login = Date.now();
         this.save();
+    }
+
+    constructor(...args: any) {
+        super(...args);
+        sequelize_fix(new.target, this);
     }
 }

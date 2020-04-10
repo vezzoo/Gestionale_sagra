@@ -1,4 +1,4 @@
-import {Sequelize} from "sequelize";
+import {Sequelize} from "sequelize-typescript";
 import {
     DATABASE_DB_NAME,
     DATABASE_DIALECT,
@@ -10,12 +10,10 @@ import {
     DATABASE_USE_URL,
     DATABASE_USERNAME
 } from "../settings";
-import Field from "./Field";
-import DbModel from "./DBModel";
 
 export default class DatabaseInterface extends Sequelize {
     private static database_singleton: DatabaseInterface | null = null;
-    private models_available: {instance: DbModel, modelType: any, fields: string[]}[];
+    private models_available: any[];
 
     private constructor() {
         if (DATABASE_USE_URL) super(DATABASE_URL);
@@ -34,28 +32,8 @@ export default class DatabaseInterface extends Sequelize {
     }
 
     async addModel(modelType: any): Promise<DatabaseInterface> {
-        let i = new modelType({}, {isNewRecord: false, hooks: false});
-        let fields = Object.getOwnPropertyNames(i)
-            .filter(elm => {
-                    return !!Object.getOwnPropertyDescriptor(i, elm)?.value?.obj;
-                }
-            )
-            .reduce((ret, elm) =>
-                Object.assign(ret,
-                    {
-                        [elm]: Object.getOwnPropertyDescriptor(i, elm)?.value.obj
-                    }), {}
-            );
-
-        modelType.init(fields, Object.assign(i.__seq_opt(), {
-            timestamps: false,
-            underscored: true,
-            freezeTableName: true,
-            tableName: i.__table_name(),
-            sequelize: this
-        }));
-
-        this.models_available.push({instance: i, modelType, fields: Object.keys(fields)});
+        this.addModels([modelType]);
+        this.models_available.push(modelType);
         console.log(`LOADED ${modelType.name}`);
         return this;
     }
@@ -67,18 +45,17 @@ export default class DatabaseInterface extends Sequelize {
     }
 
     async finalize(): Promise<void>{
-       for(let e of this.models_available){
-            e.instance.references();
+        for(let e of this.models_available){
             try {
                 if (DATABASE_REBUILD) {
-                    await e.modelType.drop();
+                    await e.drop();
                     throw Error("recreate");
                 }
-                await e.modelType.findAll({limit: 1});
+                await e.findAll({limit: 1});
             } catch (ex) {
-                if (ex.message !== "recreate") console.error(`ERROR TRYING TO FETCH TABLE ${e.modelType.name}. RECREATING.`);
-                else console.warn(`Rebuilding ${e.modelType.name}`);
-                await e.modelType.sync()
+                if (ex.message !== "recreate") console.error(`ERROR TRYING TO FETCH TABLE ${e.name}. RECREATING.`);
+                else console.warn(`Rebuilding ${e.name}`);
+                await e.sync()
             }
         }
         console.log("DATABASE READY.")

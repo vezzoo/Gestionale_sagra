@@ -1,26 +1,32 @@
-import {DataTypes, Model} from "sequelize";
-import Field from "../Field";
-import DBModel from "../DBModel";
+import {AllowNull, Column, Model, PrimaryKey, Table, BelongsTo, ForeignKey} from "sequelize-typescript";
+import {DataTypes} from "sequelize";
 import User from "./Users.model";
+import sequelize_fix from "../sequelize_fix";
 
-export default class UserPermission extends Model implements DBModel{
+@Table({
+    timestamps: false,
+    freezeTableName: true,
+    tableName: "Permissions"
+})
+export default class UserPermission extends Model<UserPermission>{
 
-    public group: string | Field = new Field(DataTypes.STRING(32)).primaryKey().allowNull(false);
-    public username: string | Field = new Field(DataTypes.STRING(128)).primaryKey().allowNull(false);
 
-    references(): void{
-        console.log("Permissions refs");
-        UserPermission.belongsTo(User, {foreignKey: 'username'});
-    }
+    @AllowNull(false)
+    @PrimaryKey
+    @Column(DataTypes.STRING(128))
+    public group!: string;
 
-    __seq_opt(): any {
-        return {underscored: true}
-    }
+    @AllowNull(false)
+    @PrimaryKey
+    @ForeignKey(() => User)
+    @Column(DataTypes.STRING(128))
+    public username!: User;
 
-    __table_name(): string {
-        return "Permissions";
-    }
+    // @BelongsTo(() => User)
+    // public team!: User;
 
-    describe(): any {
+    constructor(...args: any) {
+        super(...args);
+        sequelize_fix(new.target, this);
     }
 }
