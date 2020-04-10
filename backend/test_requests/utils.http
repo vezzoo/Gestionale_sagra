@@ -1,0 +1,9 @@
+GET http://localhost:3000/utils/ping
+Accept: application/json
+name: stefano
+
+###
+GET http://localhost:3000/utils/ping
+Accept: application/json
+
+###

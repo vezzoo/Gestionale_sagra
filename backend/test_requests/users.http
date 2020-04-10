@@ -1,0 +1,19 @@
+POST http://localhost:3000/users/user_login
+Content-Type: application/json
+
+{
+  "username": "administrator",
+  "password": "admin"
+}
+
+###
+
+POST http://localhost:3000/users/user_login
+Content-Type: application/json
+
+{
+  "username": "administrator",
+  "password": "adminlol"
+}
+
+###

@@ -37,6 +37,7 @@ Thumbs.db
 # Ignore built ts files
 dist/**/*
 
+
 # compiled output
 /dist
 /tmp
@@ -85,3 +86,4 @@ testem.log
 chrome_app/*.js
 chrome_app/*.html
 chrome_app/*.ico
+*.sqlite
