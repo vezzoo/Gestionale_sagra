@@ -24,7 +24,7 @@ import utils_ping from "./utils/ping";
 import DatabaseInterface from "./database/DatabaseInterface";
 import User from "./database/files/Users.model";
 import UserPermission from "./database/files/Permissions.model";
-import users from "./utils/users";
+import users from "./login/users";
 (async function(mainloop: MainLoop) {
     await (DatabaseInterface.getDatabase().connect()
         .then((db) => db.addModel(UserPermission))

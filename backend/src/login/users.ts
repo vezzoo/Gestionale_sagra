@@ -14,7 +14,7 @@ export default new Endpoint("users").addCallback(
             user_obj.authenticate(req.body.password);
             res.code(200);
             // @ts-ignore
-            let permissions = user_obj.permissions;
+            let permissions = user_obj.permissions.map(e => e.group);
             return {
                 name: user_obj.name,
                 permissions
