@@ -57,7 +57,7 @@ export default class LoginManager implements Authenticator {
         if (login_res.response_code === 403) return new LoginResult(false, login_res.data.message);
         if (login_res.response_code === 200) {
             await chrome_local_storage_set(this.loc_username, username);
-            await chrome_local_storage_set(this.loc_name, login_res.data.name ?? "UNKNOWN");
+            await chrome_local_storage_set(this.loc_name, login_res.data.name ?? username);
             await chrome_local_storage_set(this.loc_permissions, JSON.stringify(login_res.data.permissions));
             await chrome_local_storage_set(this.loc_token, login_res.data.token);
             await chrome_local_storage_set(this.loc_is_logged, "true");
