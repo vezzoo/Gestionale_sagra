@@ -41,7 +41,7 @@ export default class HttpRequestTemplate{
         return elm
     }
 
-    run(fill?: any, do_fail = true): Promise<FetchResponse>{
+    async run(fill?: any, do_fail = true): Promise<FetchResponse>{
         return new Promise<FetchResponse>(async (resolve, reject) => {
             this.body = this.replaceValues(fill, this.body);
             this.oth = this.replaceValues(fill, this.oth);
@@ -49,12 +49,12 @@ export default class HttpRequestTemplate{
 
             if(Object.keys(this.body).length > 0) this.headers["Content-Type"] = "application/json";
             if(this.authenticator)
-                if(!this.authenticator.doAuthentication(this.headers, this.body, this.oth))
+                if(!await this.authenticator.doAuthentication(this.headers, this.body, this.oth))
                     reject("Cannot do authentication!");
 
             let raw;
             try{
-                raw = await fetch(this.url, Object.apply(this.oth, {
+                raw = await fetch(this.url, Object.assign(this.oth, {
                     method: this.method,
                     headers: this.headers,
                     body: Object.keys(this.body).length > 0 ? JSON.stringify(this.body) : undefined

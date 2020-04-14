@@ -58,7 +58,7 @@ import { NotFoundComponent } from './components/not-found.component';
 
 const index = 'index.html';
 
-const redirect = pages.ui.path;
+const redirect = pages.login.path;
 const appRoutes: Routes = [
     {
         path: '',

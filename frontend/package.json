@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
     "build_dbg": "test $IS_SCRIPT && ng build --eval-source-map --plugin ~inline_sources_maps.js && $CHROME_APP_CMD --app-id=$CHROME_APP_ID && sleep 2 && ng build --watch --eval-source-map --plugin ~inline_sources_maps.js",
     "serve_dbg": "sh chromeid.sh",

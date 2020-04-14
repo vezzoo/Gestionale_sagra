@@ -1,4 +1,4 @@
-export default class UserData{
+export default class UserData {
     private _username: string;
     private _name: string;
     private _permissions: string[];
