@@ -54,7 +54,7 @@ export default class HttpRequestTemplate{
 
             let raw;
             try{
-                raw = await fetch(this.url, Object.apply(this.oth, {
+                raw = await fetch(this.url, Object.assign(this.oth, {
                     method: this.method,
                     headers: this.headers,
                     body: Object.keys(this.body).length > 0 ? JSON.stringify(this.body) : undefined
