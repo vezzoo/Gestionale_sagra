@@ -32,10 +32,6 @@ const authenticator = new class implements Authenticator{
 
 /*no auth requests*/
 
-<<<<<<< HEAD
-
-=======
->>>>>>> login-frontend
 export const REQ_LOGIN = new HttpRequestTemplate("POST", base_path + "/users/user_login", json_processor)
     .addBody("username", "$username")
     .addBody("password", "$password");
