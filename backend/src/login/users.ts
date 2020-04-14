@@ -25,7 +25,7 @@ export default new Endpoint("users").addCallback(
             }, JWT_PRIVATE, {algorithm: 'RS256', expiresIn: TOKEN_EXPIRE_TIME});
 
             return {
-                name: user_obj.name,
+                name: user_obj.name ?? user_obj.username,
                 permissions,
                 token
             }
