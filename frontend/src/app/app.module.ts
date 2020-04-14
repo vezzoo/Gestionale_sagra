@@ -56,7 +56,7 @@ import {getItalianPaginatorIntl} from "./italian-paginator";
 
 const index = 'index.html';
 
-const redirect = pages.ui.path;
+const redirect = pages.login.path;
 const appRoutes: Routes = [
     {
         path: '',

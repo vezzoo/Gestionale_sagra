@@ -5,7 +5,7 @@
     "icons": {
         "128": "icon_128.png"
     },
-    "permissions": ["storage"],
+    "permissions": ["storage", "http://localhost:3000/*"],
     "app": {
         "background": {
             "scripts": [

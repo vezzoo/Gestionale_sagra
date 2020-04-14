@@ -3,5 +3,5 @@ export const chrome_local_storage_set = (key: string, value:string) => new Promi
 });
 
 export const chrome_local_storage_get = (key: string) => new Promise<string>(resolve => {
-    globalThis.chrome.storage.local.get([key], (res: string) => resolve(res))
+    globalThis.chrome.storage.local.get([key], (res: string) => resolve(res[key]))
 });
