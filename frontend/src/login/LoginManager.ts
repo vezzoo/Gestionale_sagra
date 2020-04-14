@@ -3,7 +3,7 @@ import Comparator from "./comparator/Comparator";
 import EventExecution from "./EventExecution";
 import Authenticator from "../network/http_client/Authenticator";
 import {authentication_header} from "../settings/settings";
-import {login} from "../settings/requests";
+import {REQ_LOGIN} from "../settings/requests";
 import LoginResult from "./LoginResult";
 import {chrome_local_storage_get, chrome_local_storage_set} from "../settings/chrome_apis";
 
@@ -18,7 +18,6 @@ export default class LoginManager implements Authenticator{
     private readonly loc_permissions = "permissions";
     private readonly loc_is_logged = "is_logged";
     private readonly loc_token = "tok";
-    private readonly loc_data = "tok";
 
     private is_logged = false;
     private token:string;
@@ -29,11 +28,14 @@ export default class LoginManager implements Authenticator{
         if(await chrome_local_storage_get(this.loc_is_logged)) {
             this.is_logged = true;
             this.token = await chrome_local_storage_get(this.loc_token);
+            let perm = [];
+            try{
+                perm = JSON.parse(await chrome_local_storage_get(this.loc_permissions));
+            } catch (e) {}
             this._current_user = new UserData(
                 await chrome_local_storage_get(this.loc_username),
                 await chrome_local_storage_get(this.loc_name),
-                JSON.parse(await chrome_local_storage_get(this.loc_permissions)),
-                JSON.parse(await chrome_local_storage_get(this.loc_data))
+                perm
             )
         } else {
             this.is_logged = false;
@@ -54,7 +56,7 @@ export default class LoginManager implements Authenticator{
     }
 
     async login(username: string, password: string): Promise<LoginResult>{
-        let login_res = await login.run({"$username": username, "$password": password}, false);
+        let login_res = await REQ_LOGIN.run({"$username": username, "$password": password}, false);
         if(login_res.response_code === 403) return new LoginResult(false, login_res.data.message);
         if(login_res.response_code === 200){
             await chrome_local_storage_set(this.loc_username, username);
@@ -74,7 +76,6 @@ export default class LoginManager implements Authenticator{
         await chrome_local_storage_set(this.loc_name, name);
         await chrome_local_storage_set(this.loc_permissions, "[]");
         await chrome_local_storage_set(this.loc_token, "");
-        await chrome_local_storage_set(this.loc_data, "{}");
         await chrome_local_storage_set(this.loc_is_logged, "notrue");
         await this.load_user()
     }
