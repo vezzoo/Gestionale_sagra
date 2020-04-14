@@ -1,5 +1,7 @@
 import Elaborator from "../network/http_client/Elaborator";
 import HttpRequestTemplate from "../network/http_client/HttpRequestTemplate";
+import LoginManager from "../login/LoginManager";
+import Authenticator from "../network/http_client/Authenticator";
 
 const base_path = "http://localhost:3000";
 
@@ -21,11 +23,23 @@ const blob_processor = new class implements Elaborator{
     }
 };
 
+const authenticator = new class implements Authenticator{
+    async doAuthentication(headers, body, oth): Promise<boolean> {
+        let login_manager = await LoginManager.getEnvLogin();
+        return await login_manager.doAuthentication(headers, body, oth);
+    }
+}
+
 /*no auth requests*/
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> login-frontend
 export const REQ_LOGIN = new HttpRequestTemplate("POST", base_path + "/users/user_login", json_processor)
     .addBody("username", "$username")
     .addBody("password", "$password");
 
 /*auth requests*/
+
+export const AUTH_STILL_VALID = new HttpRequestTemplate("GET", base_path + "/users/alive", json_processor, authenticator);

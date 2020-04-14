@@ -3,7 +3,7 @@ import Comparator from "./comparator/Comparator";
 import EventExecution from "./EventExecution";
 import Authenticator from "../network/http_client/Authenticator";
 import {authentication_header} from "../settings/settings";
-import {REQ_LOGIN} from "../settings/requests";
+import {AUTH_STILL_VALID, REQ_LOGIN} from "../settings/requests";
 import LoginResult from "./LoginResult";
 import {chrome_local_storage_get, chrome_local_storage_set} from "../settings/chrome_apis";
 
@@ -24,8 +24,8 @@ export default class LoginManager implements Authenticator {
 
     private constructor() {}
 
-    async load_user(): Promise<void> {
-        if (await chrome_local_storage_get(this.loc_is_logged)) {
+    private async load_user(): Promise<void>{
+        if(await this.isLogged()) {
             this.is_logged = true;
             this.token = await chrome_local_storage_get(this.loc_token);
             let perm = [];
@@ -53,7 +53,7 @@ export default class LoginManager implements Authenticator {
     }
 
     async isLogged(): Promise<boolean> {
-        return await chrome_local_storage_get(this.loc_is_logged) !== null;
+        return await chrome_local_storage_get(this.loc_is_logged) === "true";
     }
 
     async login(username: string, password: string): Promise<LoginResult>{
@@ -80,6 +80,14 @@ export default class LoginManager implements Authenticator {
         await this.load_user()
     }
 
+    async is_valid(){
+        try {
+            await AUTH_STILL_VALID.run({});
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
 
     get current_user(): UserData {
         return this._current_user;
@@ -89,8 +97,9 @@ export default class LoginManager implements Authenticator {
         return fun.execute(this.is_logged && required_permissions.eval(this._current_user))(this.is_logged ? this._current_user : undefined);
     }
 
-    doAuthentication(headers, body, oth): boolean {
-        if (!this.is_logged) return false;
+
+    async doAuthentication(headers, body, oth): Promise<boolean> {
+        if(!this.is_logged) return false;
         headers[authentication_header] = this.token;
         return true;
     }
