@@ -6,3 +6,5 @@ export {magazzino} from './pages/magazzino';
 export {storico} from './pages/storico';
 export {statistiche} from './pages/statistiche';
 export {gestioneUtenti} from './pages/gestioneUtenti';
+export {forbidden} from './pages/forbidden';
+export {notFound} from './pages/notFound';

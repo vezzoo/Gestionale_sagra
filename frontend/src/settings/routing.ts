@@ -20,7 +20,7 @@ export function getPagesInSideNav(permissions: string[]): Page[] {
     let toReturn = [];
 
     for (let page of pagesNames)
-        if (permissions.includes(pages[page].requiredPermission))
+        if (permissions.includes(pages[page].requiredPermission) || pages[page].requiredPermission === '')
             toReturn.push(pages[page]);
 
     return toReturn;
@@ -31,7 +31,7 @@ export function getPagesOfCategory(cat: string, permissions: string[]): Page[] {
     let toReturn = [];
 
     for (let page of pagesNames)
-        if (permissions.includes(pages[page].requiredPermission))
+        if (permissions.includes(pages[page].requiredPermission) || pages[page].requiredPermission === '')
             toReturn.push(pages[page]);
 
     return toReturn;

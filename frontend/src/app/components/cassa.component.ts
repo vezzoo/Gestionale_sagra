@@ -1,6 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {pages} from "../../settings/routing";
 import {User} from "../interfaces/User";
+import LoginManager from "../../login/LoginManager";
 
 @Component({
     selector: 'app-cassa',
@@ -19,6 +20,8 @@ export class CassaComponent implements OnInit {
 
     ngOnInit(): void {
         this._hasSidenav.emit(pages.cassa.hasSideNav);
+
+        LoginManager.getEnvLogin().then(r => console.log(r.current_user.permissions));
     }
 
     setUser(user: User) {

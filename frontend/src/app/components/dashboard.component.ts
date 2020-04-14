@@ -17,7 +17,7 @@ export class DashboardComponent implements OnInit {
     private _categories;
     private _user: User;
 
-    constructor(private router: Router) {
+    constructor() {
         this._categories = {};
     }
 
