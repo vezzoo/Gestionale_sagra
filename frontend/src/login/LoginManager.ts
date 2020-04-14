@@ -52,6 +52,13 @@ export default class LoginManager implements Authenticator {
         return this.singleton_login_manager;
     }
 
+    static getEnvLoginSync(): LoginManager {
+        if (this.singleton_login_manager == null){
+            throw Error("Login has not been instantiated, needed an await call")
+        }
+        return this.singleton_login_manager;
+    }
+
     async isLogged(): Promise<boolean> {
         return await chrome_local_storage_get(this.loc_is_logged) === "true";
     }
