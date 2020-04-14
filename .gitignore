@@ -1,6 +1,6 @@
 *.env
 *.env.json
-backend/package-lock.json
+package-lock.json
 *.log
 *.key
 *.key.pub
