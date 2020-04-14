@@ -36,7 +36,8 @@ export default class LoginManager implements Authenticator {
                 await chrome_local_storage_get(this.loc_username),
                 await chrome_local_storage_get(this.loc_name),
                 perm
-            )
+            );
+            console.log("Loaded user:", this.current_user)
         } else {
             this.is_logged = false;
             this.token = "<invalid>";

@@ -23,7 +23,8 @@ const blob_processor = new class implements Elaborator{
 
 /*no auth requests*/
 
-export const REQ_LOGIN = new HttpRequestTemplate("POST", "/users/user_login", json_processor)
+
+export const REQ_LOGIN = new HttpRequestTemplate("POST", base_path + "/users/user_login", json_processor)
     .addBody("username", "$username")
     .addBody("password", "$password");
 
