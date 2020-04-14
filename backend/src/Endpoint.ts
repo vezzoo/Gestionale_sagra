@@ -34,7 +34,7 @@ export default class Endpoint {
             schema: schema,
             attachValidation: handle_errors,
             handler: async (req: FastifyRequest, res: FastifyReply<ServerResponse>) => {
-                let token = req.headers[AUTHENTICATION_HEADER];
+                let token = req.headers[AUTHENTICATION_HEADER.toLowerCase()];
                 try {
                     // @ts-ignore
                     let user_data: {username: string, name: string, permissions: string[]} = jwt.verify(token, JWT_PUBLIC);
