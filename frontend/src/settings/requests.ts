@@ -32,10 +32,10 @@ const authenticator = new class implements Authenticator{
 
 /*no auth requests*/
 
-export const REQ_LOGIN = new HttpRequestTemplate("POST", base_path + "/users/authenticate", json_processor)
+export const REQ_LOGIN = new HttpRequestTemplate("POST", base_path + "/users/user_login", json_processor)
     .addBody("username", "$username")
     .addBody("password", "$password");
 
 /*auth requests*/
 
-export const AUTH_STILL_VALID = new HttpRequestTemplate("GET", base_path + "/users/authenticate", json_processor, authenticator);
+export const AUTH_STILL_VALID = new HttpRequestTemplate("GET", base_path + "/users/alive", json_processor, authenticator);

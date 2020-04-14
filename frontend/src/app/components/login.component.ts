@@ -52,8 +52,7 @@ export class LoginComponent implements OnInit {
 
     async checkIfIsLogged(): Promise<boolean> {
         let loginManager = await LoginManager.getEnvLogin();
-        return (await loginManager.isLogged());
-        //todo check token validity
+        return (await loginManager.isLogged()) && (await loginManager.is_valid());
     }
 
     async ngOnInit(): Promise<void> {

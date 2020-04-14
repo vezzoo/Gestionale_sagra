@@ -25,7 +25,7 @@ export default class LoginManager implements Authenticator{
     private constructor() {}
 
     private async load_user(): Promise<void>{
-        if(await chrome_local_storage_get(this.loc_is_logged)) {
+        if(await this.isLogged()) {
             this.is_logged = true;
             this.token = await chrome_local_storage_get(this.loc_token);
             let perm = [];
@@ -52,7 +52,7 @@ export default class LoginManager implements Authenticator{
     }
 
     async isLogged(): Promise<boolean> {
-        return await chrome_local_storage_get(this.loc_is_logged) !== null;
+        return await chrome_local_storage_get(this.loc_is_logged) === "true";
     }
 
     async login(username: string, password: string): Promise<LoginResult>{
@@ -81,7 +81,7 @@ export default class LoginManager implements Authenticator{
 
     async is_valid(){
         try {
-            await AUTH_STILL_VALID.run();
+            await AUTH_STILL_VALID.run({});
             return true;
         } catch (e) {
             return false;
