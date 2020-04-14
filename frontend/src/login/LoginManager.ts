@@ -100,7 +100,7 @@ export default class LoginManager implements Authenticator {
         return this._current_user;
     }
 
-    requireAuth(required_permissions: Comparator<UserData>, fun: any): any {
+    requireAuth(required_permissions: Comparator<UserData>, fun: EventExecution): any {
         return fun.execute(this.is_logged && required_permissions.eval(this._current_user))(this.is_logged ? this._current_user : undefined);
     }
 

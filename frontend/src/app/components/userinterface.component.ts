@@ -12,6 +12,7 @@ import {toggleSidenavState} from "../animations/ui/toggleSidenavState";
 import {Page} from "../interfaces/Page";
 import {User} from "../interfaces/User";
 import permissions from "../../settings/pages_description/permissions";
+import LoginManager from "../../login/LoginManager";
 
 
 @Component({
@@ -41,17 +42,19 @@ export class UserinterfaceComponent implements OnInit {
     constructor(private router: Router, private cdRef: ChangeDetectorRef) {
         this._user = {
             name: "Pierangelo",
-            permissions: [permissions.dashboard, permissions.cassa, permissions.utenti]
+            permissions: [permissions.dashboard, permissions.cassa, permissions.magazzino, permissions.utenti, permissions.ordini, permissions.statistiche]
         };
 
-        this._pages = getPagesInSideNav(this._user.permissions);
         this._hasSideNav = true;
         this._showPath = false;
         this.showText = false;
     }
 
-    ngOnInit(): void {
+    async ngOnInit(): Promise<void> {
+        // let authManager = await LoginManager.getEnvLogin();
+        // this._user = authManager.current_user;
 
+        this._pages = getPagesInSideNav(this._user.permissions);
     }
 
     get pages(): Array<object> {

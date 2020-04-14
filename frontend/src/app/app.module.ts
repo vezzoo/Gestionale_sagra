@@ -53,6 +53,8 @@ import {CassaComponent} from './components/cassa.component';
 import {KeyboardListenerComponent} from './components/keyboard-listener.component';
 import {GestioneUtentiComponent} from './components/gestione-utenti.component';
 import {getItalianPaginatorIntl} from "./italian-paginator";
+import { ForbiddenComponent } from './components/forbidden.component';
+import { NotFoundComponent } from './components/not-found.component';
 
 const index = 'index.html';
 
@@ -73,7 +75,7 @@ const appRoutes: Routes = [
         children: [
             {
                 path: '',
-                redirectTo: pages.dashboard.path,
+                redirectTo: pages.notFound.path,
                 pathMatch: 'full'
             },
             {
@@ -99,6 +101,15 @@ const appRoutes: Routes = [
             {
                 path: pages.gestioneUtenti.path,
                 component: GestioneUtentiComponent
+            },
+
+            {
+                path: pages.forbidden.path,
+                component: ForbiddenComponent
+            },
+            {
+                path: pages.notFound.path,
+                component: NotFoundComponent
             }
         ]
     },
@@ -107,7 +118,7 @@ const appRoutes: Routes = [
         path: index,
         redirectTo: redirect,
         pathMatch: 'full'
-    }
+    },
     // {path: '**', component: PageNotFoundComponent}
 ];
 
@@ -120,7 +131,9 @@ const appRoutes: Routes = [
         UserinterfaceComponent,
         CassaComponent,
         KeyboardListenerComponent,
-        GestioneUtentiComponent
+        GestioneUtentiComponent,
+        ForbiddenComponent,
+        NotFoundComponent
     ],
     imports: [
         BrowserModule,
