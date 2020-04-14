@@ -75,7 +75,7 @@ const appRoutes: Routes = [
         children: [
             {
                 path: '',
-                redirectTo: pages.notFound.path,
+                redirectTo: pages.dashboard.path,
                 pathMatch: 'full'
             },
             {

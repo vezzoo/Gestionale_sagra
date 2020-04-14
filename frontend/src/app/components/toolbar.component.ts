@@ -4,8 +4,13 @@ import {Router} from "@angular/router";
 import {TooltipPosition} from "@angular/material/tooltip";
 import {FormControl} from "@angular/forms";
 import {pushTo} from "../utility/sharedFunctions";
-import {toggleShowPathAnimation, animazione_mostra, animazione_nascondi} from "../animations/toolbar/toggleShowPathAnimation";
+import {
+    toggleShowPathAnimation,
+    animazione_mostra,
+    animazione_nascondi
+} from "../animations/toolbar/toggleShowPathAnimation";
 import {pages} from "../../settings/routing";
+import LoginManager from "../../login/LoginManager";
 
 @Component({
     selector: 'app-toolbar',
@@ -37,6 +42,7 @@ export class ToolbarComponent implements OnInit {
     }
 
     async logout(): Promise<void> {
+        await (await LoginManager.getEnvLogin()).logout();
         await pushTo(this.router, pages.login.path);
     }
 

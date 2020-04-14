@@ -40,21 +40,21 @@ export class UserinterfaceComponent implements OnInit {
     private _user: User;
 
     constructor(private router: Router, private cdRef: ChangeDetectorRef) {
-        this._user = {
-            name: "Pierangelo",
-            permissions: [permissions.dashboard, permissions.cassa, permissions.magazzino, permissions.utenti, permissions.ordini, permissions.statistiche]
-        };
+        // this._user = {
+        //     name: "Pierangelo",
+        //     permissions: [permissions.dashboard, permissions.cassa, permissions.magazzino, permissions.utenti, permissions.ordini, permissions.statistiche]
+        // };
 
         this._hasSideNav = true;
         this._showPath = false;
         this.showText = false;
     }
 
-    async ngOnInit(): Promise<void> {
-        // let authManager = await LoginManager.getEnvLogin();
-        // this._user = authManager.current_user;
+    ngOnInit(): void {
+        this._user = authManager.current_user;
 
-        this._pages = getPagesInSideNav(this._user.permissions);
+        console.log(this._user)
+        // this._pages = getPagesInSideNav(this._user.permissions);
     }
 
     get pages(): Array<object> {
