@@ -34,3 +34,5 @@ export const AUTHENTICATION_HEADER = 'Authentication';
 //openssl rsa -in jwtRS256.key -pubout -outform PEM -out jwtRS256.key.pub
 export const JWT_PRIVATE = fs.readFileSync('jwtRS256.key');
 export const JWT_PUBLIC = fs.readFileSync('jwtRS256.key.pub');
+
+export const API_ROOT = "";

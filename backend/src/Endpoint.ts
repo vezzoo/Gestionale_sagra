@@ -52,9 +52,9 @@ export default class Endpoint {
         return this;
     }
 
-    _add(server: FastifyInstance) {
+    _add(server: FastifyInstance, base_path: string) {
         this.eps.forEach(e => {
-            console.log("Loading endpoint", e.url);
+            console.log("Loading endpoint", base_path + e.url);
             server.route(e)
         });
     }

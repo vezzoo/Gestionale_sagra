@@ -1,6 +1,6 @@
 import "regenerator-runtime/runtime.js";
 import fastify from 'fastify'
-import {WEBSERVER_BIND, WEBSERVER_PORT} from "./settings";
+import {API_ROOT, WEBSERVER_BIND, WEBSERVER_PORT} from "./settings";
 import Endpoint from "./Endpoint";
 
 export class MainLoop {
@@ -11,7 +11,7 @@ export class MainLoop {
     }
 
     add(ep: Endpoint):MainLoop {
-        ep._add(this.server);
+        ep._add(this.server, API_ROOT);
         return this;
     }
 
