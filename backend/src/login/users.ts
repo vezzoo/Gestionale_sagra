@@ -1,8 +1,10 @@
 import Endpoint from "../Endpoint";
 import S from "fluent-schema";
-import {AUTHENTICATION_MIN_USERNAME_LENGTH} from "../settings";
+import {AUTHENTICATION_MIN_USERNAME_LENGTH, JWT_PRIVATE, TOKEN_EXPIRE_TIME} from "../settings";
 import User from "../database/files/Users.model";
 import UserPermission from "../database/files/Permissions.model";
+import fs from 'fs';
+import jwt from 'jsonwebtoken';
 
 export default new Endpoint("users").addCallback(
     "POST",
@@ -15,9 +17,13 @@ export default new Endpoint("users").addCallback(
             res.code(200);
             // @ts-ignore
             let permissions = user_obj.permissions.map(e => e.group);
+
+            let token = jwt.sign({ username: user_obj.username, name: user_obj.name, permissions: user_obj.permissions }, JWT_PRIVATE, { algorithm: 'RS256', expiresIn: TOKEN_EXPIRE_TIME });
+
             return {
                 name: user_obj.name,
-                permissions
+                permissions,
+                token
             }
         } catch (ex){
             res.code(403);

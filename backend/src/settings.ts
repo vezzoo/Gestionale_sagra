@@ -1,3 +1,5 @@
+import fs from "fs";
+
 export const WEBSERVER_PORT = 3000;
 export const WEBSERVER_BIND = "0.0.0.0";
 
@@ -23,3 +25,12 @@ const _AUTH_RULE_PSW_CONTAINS_LOWERCASE = `(?=.*[a-z])`;
 const _AUTH_RULE_PSW_CONTAINS_UPPERCASE = `(?=.*[A-Z])`;
 const _AUTH_RULE_PSW_CONTAINS_SYMBOL = `(?=.*[\`\\-=\\[\\];',./\\\\\\*\\-\\+~_+{}:"\\|?><!@#$%^&*()])`;
 export const AUTHENTICATION_PASSWORD_RULE = [_AUTH_RULE_PSW_MIN_LENGTH, _AUTH_RULE_PSW_CONTAINS_DIGIT, _AUTH_RULE_PSW_CONTAINS_LOWERCASE, _AUTH_RULE_PSW_CONTAINS_UPPERCASE, _AUTH_RULE_PSW_CONTAINS_SYMBOL];
+
+export const TOKEN_EXPIRE_TIME = '1h';
+
+export const AUTHENTICATION_HEADER = 'Authentication';
+
+//ssh-keygen -t rsa -b 4096 -m PEM -f jwtRS256.key
+//openssl rsa -in jwtRS256.key -pubout -outform PEM -out jwtRS256.key.pub
+export const JWT_PRIVATE = fs.readFileSync('jwtRS256.key');
+export const JWT_PUBLIC = fs.readFileSync('jwtRS256.key.pub');

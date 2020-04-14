@@ -3,6 +3,7 @@
 backend/package-lock.json
 *.log
 *.key
+*.key.pub
 *.crt
 
 lib-cov
