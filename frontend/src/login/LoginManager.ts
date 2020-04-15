@@ -6,6 +6,7 @@ import {authentication_header} from "../settings/settings";
 import {AUTH_STILL_VALID, REQ_LOGIN} from "../settings/requests";
 import LoginResult from "./LoginResult";
 import {chrome_local_storage_get, chrome_local_storage_set} from "../settings/chrome_apis";
+import getMessage from "../network/http_client/messages";
 
 
 export default class LoginManager implements Authenticator {
@@ -65,7 +66,6 @@ export default class LoginManager implements Authenticator {
 
     async login(username: string, password: string): Promise<LoginResult>{
         let login_res = await REQ_LOGIN.run({"$username": username, "$password": password}, false);
-        if(login_res.response_code === 403) return new LoginResult(false, login_res.data.message);
         if(login_res.response_code === 200){
             await chrome_local_storage_set(this.loc_username, username);
             await chrome_local_storage_set(this.loc_name, login_res.data.name ?? username);
@@ -75,7 +75,7 @@ export default class LoginManager implements Authenticator {
             await this.load_user();
             return new LoginResult(true, "OK");
         }
-        return new LoginResult(false, "Unknown error");
+        if(login_res.data.std) return new LoginResult(false, getMessage(login_res.data));
     }
 
     async logout() {
