@@ -75,8 +75,8 @@ export default class User extends Model<User>{
     public authenticate(password: string): void {
         //let reg = new RegExp(AUTHENTICATION_PASSWORD_RULE.join(''), 'g');
         //if (!(password.match(reg)?.length)) throw Error("PSW RULE NOT MATCHED");
-        if (this.password !== User.generate_db_passw(this.salt, password)) throw Error("INVALID CREDENTIALS");
-        if (!this.enabled) throw Error("USER NOT ENABLED");
+        if (this.password !== User.generate_db_passw(this.salt, password)) throw Error("EINVCRED");
+        if (!this.enabled) throw Error("EUNOTEN");
         this.last_login = Date.now();
         this.save();
     }

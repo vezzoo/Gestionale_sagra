@@ -1,10 +1,12 @@
 import Endpoint from "../Endpoint";
 import S from "fluent-schema";
-import {AUTHENTICATION_MIN_USERNAME_LENGTH, JWT_PRIVATE, TOKEN_EXPIRE_TIME} from "../settings";
+import {JWT_PRIVATE, TOKEN_EXPIRE_TIME} from "../settings";
 import User from "../database/files/Users.model";
 import UserPermission from "../database/files/Permissions.model";
 import jwt from 'jsonwebtoken';
 import ComparatorAll from "../comparators/ComparatorAll";
+import * as messages from "../messages"
+import {message} from "../messages";
 
 export default new Endpoint("users").addCallback(
     "POST",
@@ -12,7 +14,7 @@ export default new Endpoint("users").addCallback(
     async (req, res) => {
         let user_obj = await User.findByPk(req.body.username, {include: [UserPermission]});
         try {
-            if (!user_obj) throw Error("User not found");
+            if (!user_obj) throw Error("ENOFOUND");
             user_obj.authenticate(req.body.password);
             res.code(200);
             // @ts-ignore
@@ -30,18 +32,17 @@ export default new Endpoint("users").addCallback(
                 token
             }
         } catch (ex) {
-            res.code(403);
-            return {
-                message: ex.message
+            if(Object.keys(messages).includes(ex.message)) {
+                // @ts-ignore
+                return messages[ex.message](res)
             }
+            return message(500, "-", ex.message);
         }
     },
     {
         body: S.object()
-            .prop('username', S.string()
-                .minLength(AUTHENTICATION_MIN_USERNAME_LENGTH)
-            )
-            .prop('password', S.string())
+            .prop('username', S.string().required())
+            .prop('password', S.string().required())
     }
 ).addAuthCallback(
     new ComparatorAll(),
