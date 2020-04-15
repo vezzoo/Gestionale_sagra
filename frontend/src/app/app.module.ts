@@ -53,8 +53,11 @@ import {CassaComponent} from './components/cassa.component';
 import {KeyboardListenerComponent} from './components/keyboard-listener.component';
 import {GestioneUtentiComponent} from './components/gestione-utenti.component';
 import {getItalianPaginatorIntl} from "./italian-paginator";
-import { ForbiddenComponent } from './components/forbidden.component';
-import { NotFoundComponent } from './components/not-found.component';
+import {ForbiddenComponent} from './components/forbidden.component';
+import {NotFoundComponent} from './components/not-found.component';
+import {MagazzinoComponent} from './components/magazzino.component';
+import {StoricoComponent} from './components/storico.component';
+import {StatisticheComponent} from './components/statistiche.component';
 
 const index = 'index.html';
 
@@ -88,15 +91,15 @@ const appRoutes: Routes = [
             },
             {
                 path: pages.magazzino.path,
-                component: DashboardComponent
+                component: MagazzinoComponent
             },
             {
                 path: pages.storico.path,
-                component: DashboardComponent
+                component: StoricoComponent
             },
             {
                 path: pages.statistiche.path,
-                component: DashboardComponent
+                component: StatisticheComponent
             },
             {
                 path: pages.gestioneUtenti.path,
@@ -119,7 +122,7 @@ const appRoutes: Routes = [
         redirectTo: redirect,
         pathMatch: 'full'
     },
-    // {path: '**', component: PageNotFoundComponent}
+    {path: '**', component: NotFoundComponent}
 ];
 
 @NgModule({
@@ -133,7 +136,10 @@ const appRoutes: Routes = [
         KeyboardListenerComponent,
         GestioneUtentiComponent,
         ForbiddenComponent,
-        NotFoundComponent
+        NotFoundComponent,
+        MagazzinoComponent,
+        StoricoComponent,
+        StatisticheComponent
     ],
     imports: [
         BrowserModule,

@@ -20,10 +20,8 @@ export class CassaComponent implements OnInit {
 
     ngOnInit(): void {
         this._hasSidenav.emit(pages.cassa.hasSideNav);
-    }
 
-    setUser(user: User) {
-        this._user = user;
+        this._user = LoginManager.getEnvLoginSync().current_user;
     }
 
 }

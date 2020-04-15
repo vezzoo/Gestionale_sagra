@@ -51,10 +51,10 @@ export class UserinterfaceComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        let authManager = LoginManager.getEnvLoginSync();
         this._user = authManager.current_user;
 
-        console.log(this._user)
-        // this._pages = getPagesInSideNav(this._user.permissions);
+        this._pages = getPagesInSideNav(this._user.permissions);
     }
 
     get pages(): Array<object> {
@@ -70,8 +70,6 @@ export class UserinterfaceComponent implements OnInit {
     }
 
     onActivate(componentReference: any): void {
-        componentReference.setUser(this._user);
-
         componentReference._hasSidenav.subscribe((data) => {
             this._hasSideNav = data;
             this.cdRef.detectChanges();

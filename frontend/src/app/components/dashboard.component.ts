@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {pages, categories, getPagesOfCategory} from "../../settings/routing";
 import {Page} from "../interfaces/Page";
 import {User} from "../interfaces/User";
+import LoginManager from "../../login/LoginManager";
 
 @Component({
     selector: 'app-dashboard',
@@ -24,16 +25,13 @@ export class DashboardComponent implements OnInit {
     ngOnInit(): void {
         this._hasSidenav.emit(pages.dashboard.hasSideNav);
 
+        this._user = LoginManager.getEnvLoginSync().current_user;
         for (let cat of Object.keys(categories))
             this._categories[cat] = getPagesOfCategory(cat, this._user.permissions);
     }
 
     get categories() {
         return Object.keys(this._categories);
-    }
-
-    setUser(user: User) {
-        this._user = user;
     }
 
     getCatName(cat: string): string {
