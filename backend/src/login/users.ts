@@ -14,7 +14,7 @@ export default new Endpoint("users").addCallback(
     async (req, res) => {
         let user_obj = await User.findByPk(req.body.username, {include: [UserPermission]});
         try {
-            if (!user_obj) throw Error("ENOFOUND");
+            if (!user_obj) throw Error("EUNOFOUND");
             user_obj.authenticate(req.body.password);
             res.code(200);
             // @ts-ignore
@@ -36,7 +36,7 @@ export default new Endpoint("users").addCallback(
                 // @ts-ignore
                 return messages[ex.message](res)
             }
-            return message(500, "-", ex.message);
+            return message(500, "-", ex.message)(res);
         }
     },
     {

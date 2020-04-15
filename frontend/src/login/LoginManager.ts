@@ -76,6 +76,7 @@ export default class LoginManager implements Authenticator {
             return new LoginResult(true, "OK");
         }
         if(login_res.data.std) return new LoginResult(false, getMessage(login_res.data));
+        if(login_res.data.std) return new LoginResult(false, "wtf");
     }
 
     async logout() {
