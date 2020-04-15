@@ -48,10 +48,6 @@ export class LoginComponent implements OnInit {
         }
     }
 
-    get loginError() {
-        return this._loginError;
-    }
-
     get hidePassword(): boolean {
         return this._hidePassword;
     }
@@ -67,7 +63,7 @@ export class LoginComponent implements OnInit {
     async doLogin(credentials: { username: string, password: string }): Promise<void> {
         let login_manager = await LoginManager.getEnvLogin();
         let result = await login_manager.login(credentials.username, credentials.password);
-        if(!result.success){
+        if (!result.success) {
             //error!
             this._loginError = true;
             this.errorMessage = result.message;
