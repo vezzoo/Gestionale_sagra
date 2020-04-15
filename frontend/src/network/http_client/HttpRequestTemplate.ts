@@ -43,21 +43,25 @@ export default class HttpRequestTemplate{
 
     async run(fill?: any, do_fail = true): Promise<FetchResponse>{
         return new Promise<FetchResponse>(async (resolve, reject) => {
-            this.body = this.replaceValues(fill, this.body);
-            this.oth = this.replaceValues(fill, this.oth);
-            this.headers = this.replaceValues(fill, this.headers);
+            let b = JSON.parse(JSON.stringify(this.body));
+            let o = JSON.parse(JSON.stringify(this.oth));
+            let h = JSON.parse(JSON.stringify(this.headers));
+            b = this.replaceValues(fill, b);
+            o = this.replaceValues(fill, o);
+            h = this.replaceValues(fill, h);
 
-            if(Object.keys(this.body).length > 0) this.headers["Content-Type"] = "application/json";
+
+            if(Object.keys(b).length > 0) h["Content-Type"] = "application/json";
             if(this.authenticator)
-                if(!await this.authenticator.doAuthentication(this.headers, this.body, this.oth))
+                if(!await this.authenticator.doAuthentication(h, b, o))
                     reject("Cannot do authentication!");
 
             let raw;
             try{
-                raw = await fetch(this.url, Object.assign(this.oth, {
+                raw = await fetch(this.url, Object.assign(o, {
                     method: this.method,
-                    headers: this.headers,
-                    body: Object.keys(this.body).length > 0 ? JSON.stringify(this.body) : undefined
+                    headers: h,
+                    body: Object.keys(b).length > 0 ? JSON.stringify(b) : undefined
                 }));
             } catch (e) {
                 reject(e);
