@@ -21,7 +21,7 @@ export class KeyboardListenerComponent implements OnInit {
     @HostListener('window:keypress', ['$event'])
     keyEvent(event: KeyboardEvent) {
         //toggle left side nav (e)xpand
-        if (event.ctrlKey && event.key.toLowerCase() === 'e') {
+        if (event.ctrlKey && event.code === 'KeyE') {
             this._showPath = !this._showPath;
             this._toggleShowPath.emit(this._showPath);
         }

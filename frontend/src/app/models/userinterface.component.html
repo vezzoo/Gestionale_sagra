@@ -5,7 +5,7 @@
     <mat-sidenav
         mode="side"
         [opened]="hasSideNav"
-        [@toggleSidenavState]="toggleSidenavState()"
+        [@toggleSidenavState]="{value: toggleSidenavState(), params: {maxWidth: calculateMaxMarginLeft(), minWidth: calculateMinMarginLeft()}}"
         class="sidenav"
     >
 
@@ -44,6 +44,8 @@
 
         </mat-list>
 
+        <div #leftSidenav class="transparent"></div>
+
         <div class="nome-div">
 
             <p class="nome-text">{{getUserName()}}</p>
@@ -52,9 +54,11 @@
 
     </mat-sidenav>
 
-    <mat-sidenav-content [@toggleContentState]="{value: toggleSidenavState(), params: {marginLeft: calculateMarginLeft()}}">
+    <mat-sidenav-content
+        [@toggleContentState]="{value: toggleSidenavState(), params: {maxMarginLeft: calculateMaxMarginLeft(), minMarginLeft: calculateMinMarginLeft()}}">
 
-        <app-toolbar (_toggleShowPath)="toggleShowPath($event)" [_showPath]="showPath" [_hasSidenav]="hasSideNav"></app-toolbar>
+        <app-toolbar (_toggleShowPath)="toggleShowPath($event)" [_showPath]="showPath"
+                     [_hasSidenav]="hasSideNav"></app-toolbar>
 
         <router-outlet (activate)="onActivate($event)"></router-outlet>
 

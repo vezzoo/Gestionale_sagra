@@ -14,7 +14,6 @@ const italianRangeLabel = (page: number, pageSize: number, length: number) => {
     return `${startIndex + 1} - ${endIndex} di ${length}`;
 };
 
-
 export function getItalianPaginatorIntl() {
     const paginatorIntl = new MatPaginatorIntl();
 

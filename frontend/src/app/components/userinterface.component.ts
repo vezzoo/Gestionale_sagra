@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 
 import {Router} from "@angular/router";
 
@@ -36,15 +36,14 @@ export class UserinterfaceComponent implements OnInit {
     private _hasSideNav: boolean;
     private _showPath: boolean;
     private showText: boolean;
-
+    private minMarginLeft: number;
+    private maxMarginLeft: number;
     private _user: User;
 
-    constructor(private router: Router, private cdRef: ChangeDetectorRef) {
-        // this._user = {
-        //     name: "Pierangelo",
-        //     permissions: [permissions.dashboard, permissions.cassa, permissions.magazzino, permissions.utenti, permissions.ordini, permissions.statistiche]
-        // };
+    @ViewChild('leftSidenav')
+    private leftSidenav: ElementRef;
 
+    constructor(private router: Router, private cdRef: ChangeDetectorRef) {
         this._hasSideNav = true;
         this._showPath = false;
         this.showText = false;
@@ -55,6 +54,12 @@ export class UserinterfaceComponent implements OnInit {
         this._user = authManager.current_user;
 
         this._pages = getPagesInSideNav(this._user.permissions);
+    }
+
+    ngAfterViewInit() {
+        this.minMarginLeft = this.leftSidenav.nativeElement.offsetWidth * 0.34;
+        this.maxMarginLeft = this.leftSidenav.nativeElement.offsetWidth;
+        this.cdRef.detectChanges();
     }
 
     get pages(): Array<object> {
@@ -124,9 +129,16 @@ export class UserinterfaceComponent implements OnInit {
         return this._showPath ? animazione_open : animazione_close;
     }
 
-    calculateMarginLeft() {
-        if (this._hasSideNav)
-            return 3.4;
+    calculateMinMarginLeft() {
+        if (this._hasSideNav && this.minMarginLeft)
+            return this.minMarginLeft;
+
+        return 0;
+    }
+
+    calculateMaxMarginLeft() {
+        if (this.maxMarginLeft)
+            return this.maxMarginLeft;
 
         return 0;
     }
