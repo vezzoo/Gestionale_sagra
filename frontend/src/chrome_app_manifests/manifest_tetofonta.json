@@ -1,0 +1,30 @@
+{
+    "manifest_version": 2,
+    "name": "gestionale",
+    "version": "0.0.0",
+    "icons": {
+        "128": "icon_128.png"
+    },
+    "permissions": ["storage", "http://localhost:3000/*"],
+    "app": {
+        "background": {
+            "scripts": [
+                "background.js"
+            ]
+        }
+    },
+    "sockets": {
+        "udp": {
+            "send": [
+                "*:*"
+            ],
+            "bind": [
+                "*:*"
+            ]
+        }
+    },
+    "minimum_chrome_version": "44",
+
+    "web_accessible_resources": ["*.map"]
+
+}
