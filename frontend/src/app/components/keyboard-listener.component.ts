@@ -35,7 +35,6 @@ export class KeyboardListenerComponent implements OnInit {
             this._hidePassword = !this._hidePassword;
             this._toggleShowPassword.emit(this._hidePassword);
         }
-
     }
 
 }

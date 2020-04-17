@@ -18,11 +18,17 @@
 
         <div class="right-toolbar">
 
+            <div *ngIf="isDashboard()" class="text" style="margin: .6vh 1vw 0 auto">
+
+                <p>{{username()}}</p>
+
+            </div>
+
             <button mat-icon-button matSuffix
                     (click)="logout()" type="button"
                     matTooltip="Logout"
                     [matTooltipPosition]="position.value"
-                    class="right-component"
+                    style="margin: 0 1px 0 0"
             >
                 <mat-icon>{{'logout'}}</mat-icon>
             </button>

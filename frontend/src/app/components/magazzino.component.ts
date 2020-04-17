@@ -13,17 +13,18 @@ export class MagazzinoComponent implements OnInit {
     @Output() _hasSidenav: EventEmitter<any> = new EventEmitter();
 
     private _user: User;
-    private solaLettura: boolean = true;
 
     constructor() {
 
     }
 
     ngOnInit(): void {
-        this._hasSidenav.emit(pages.magazzino.hasSideNav);
+        this._hasSidenav.emit({
+            hasSideNav: pages.magazzino.hasSideNav,
+            toolbarFrom: pages.magazzino.path
+        });
 
         this._user = LoginManager.getEnvLoginSync().current_user;
-        this.solaLettura = this._user.permissions.includes('magazzino_read');
     }
 
 }

@@ -4,6 +4,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {User} from "../interfaces/User";
+import LoginManager from "../../login/LoginManager";
 
 const users: any = [
     {
@@ -100,10 +101,15 @@ export class GestioneUtentiComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this._hasSidenav.emit(pages.gestioneUtenti.hasSideNav);
+        this._hasSidenav.emit({
+            hasSideNav: pages.gestioneUtenti.hasSideNav,
+            toolbarFrom: pages.gestioneUtenti.path
+        });
 
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
+
+        this._user = LoginManager.getEnvLoginSync().current_user;
     }
 
     applyFilter(event: Event) {

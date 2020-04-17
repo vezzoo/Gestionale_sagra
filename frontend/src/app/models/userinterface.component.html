@@ -58,7 +58,7 @@
         [@toggleContentState]="{value: toggleSidenavState(), params: {maxMarginLeft: calculateMaxMarginLeft(), minMarginLeft: calculateMinMarginLeft()}}">
 
         <app-toolbar (_toggleShowPath)="toggleShowPath($event)" [_showPath]="showPath"
-                     [_hasSidenav]="hasSideNav"></app-toolbar>
+                     [_hasSidenav]="hasSideNav" [from]="getToolbarFrom()"></app-toolbar>
 
         <router-outlet (activate)="onActivate($event)"></router-outlet>
 

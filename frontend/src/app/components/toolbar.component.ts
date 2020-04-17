@@ -22,6 +22,7 @@ import LoginManager from "../../login/LoginManager";
 })
 
 export class ToolbarComponent implements OnInit {
+    @Input() private from: string;
     @Input() private _hasSidenav: boolean;
     @Input() private _showPath: boolean;
     @Output() private _toggleShowPath: EventEmitter<any> = new EventEmitter();
@@ -57,5 +58,13 @@ export class ToolbarComponent implements OnInit {
 
     get position(): FormControl {
         return this._position;
+    }
+
+    isDashboard() {
+        return this.from === pages.dashboard.path;
+    }
+
+    username() {
+        return LoginManager.getEnvLoginSync().current_user.username;
     }
 }

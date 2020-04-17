@@ -58,7 +58,6 @@ import {NotFoundComponent} from './components/not-found.component';
 import {MagazzinoComponent} from './components/magazzino.component';
 import {StoricoComponent} from './components/storico.component';
 import {StatisticheComponent} from './components/statistiche.component';
-
 const index = 'index.html';
 
 const redirect = pages.login.path;

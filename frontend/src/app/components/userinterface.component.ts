@@ -39,6 +39,7 @@ export class UserinterfaceComponent implements OnInit {
     private minMarginLeft: number;
     private maxMarginLeft: number;
     private _user: User;
+    private toolbarFrom: string;
 
     @ViewChild('leftSidenav')
     private leftSidenav: ElementRef;
@@ -76,7 +77,8 @@ export class UserinterfaceComponent implements OnInit {
 
     onActivate(componentReference: any): void {
         componentReference._hasSidenav.subscribe((data) => {
-            this._hasSideNav = data;
+            this._hasSideNav = data.hasSideNav;
+            this.toolbarFrom = data.toolbarFrom;
             this.cdRef.detectChanges();
         })
     }
@@ -145,5 +147,9 @@ export class UserinterfaceComponent implements OnInit {
 
     getFrom(){
         return pages.ui.path;
+    }
+
+    getToolbarFrom() {
+        return this.toolbarFrom;
     }
 }

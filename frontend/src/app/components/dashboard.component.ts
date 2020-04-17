@@ -23,7 +23,10 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this._hasSidenav.emit(pages.dashboard.hasSideNav);
+        this._hasSidenav.emit({
+            hasSideNav: pages.dashboard.hasSideNav,
+            toolbarFrom: pages.dashboard.path
+        });
 
         this._user = LoginManager.getEnvLoginSync().current_user;
         for (let cat of Object.keys(categories))
