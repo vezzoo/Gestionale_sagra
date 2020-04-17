@@ -49,8 +49,6 @@ export default class HttpRequestTemplate{
             b = this.replaceValues(fill, b);
             o = this.replaceValues(fill, o);
             h = this.replaceValues(fill, h);
-
-
             if(Object.keys(b).length > 0) h["Content-Type"] = "application/json";
             if(this.authenticator)
                 if(!await this.authenticator.doAuthentication(h, b, o))
