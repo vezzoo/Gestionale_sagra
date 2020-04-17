@@ -1,5 +1,7 @@
 <div class="container">
 
+    <app-keyboard-listener (_toggleShowPassword)="toggleShowPassword($event)" [_hidePassword]="hidePassword" [from]="getFrom()"></app-keyboard-listener>
+
     <div class="login-container">
 
         <div class="login-wrap">

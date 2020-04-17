@@ -142,4 +142,8 @@ export class UserinterfaceComponent implements OnInit {
 
         return 0;
     }
+
+    getFrom(){
+        return pages.ui.path;
+    }
 }

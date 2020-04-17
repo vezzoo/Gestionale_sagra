@@ -111,8 +111,4 @@ export class GestioneUtentiComponent implements OnInit {
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
-    setUser(user: User) {
-        this._user = user;
-    }
-
 }

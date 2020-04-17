@@ -95,4 +95,12 @@ export class LoginComponent implements OnInit {
     get errorLogin() {
         return this._loginError ? animazione_mostra : animazione_nascondi;
     }
+
+    toggleShowPassword(state: boolean) {
+        this._hidePassword = state;
+    }
+
+    getFrom(): string {
+        return pages.login.path;
+    }
 }

@@ -1,6 +1,6 @@
 <mat-sidenav-container autosize>
 
-    <app-keyboard-listener (_toggleShowPath)="toggleShowPath($event)" [_showPath]="showPath"></app-keyboard-listener>
+    <app-keyboard-listener (_toggleShowPath)="toggleShowPath($event)" [_showPath]="showPath" [from]="getFrom()"></app-keyboard-listener>
 
     <mat-sidenav
         mode="side"
