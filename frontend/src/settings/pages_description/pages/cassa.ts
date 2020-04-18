@@ -7,5 +7,5 @@ export const cassa = {
     hasSideNav: true,
     category: categories.servizi,
     icon: 'local_atm',
-    requiredPermission: permissions.cassa
+    requiredPermission: permissions.cassa.name
 };

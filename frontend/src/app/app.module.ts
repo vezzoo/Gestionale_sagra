@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 
 import {RouterModule, Routes} from "@angular/router";
 
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AppRoutingModule} from "./app-routing.module";
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -51,7 +51,7 @@ import {ToolbarComponent} from './components/toolbar.component';
 import {UserinterfaceComponent} from './components/userinterface.component';
 import {CassaComponent} from './components/cassa.component';
 import {KeyboardListenerComponent} from './components/keyboard-listener.component';
-import {GestioneUtentiComponent} from './components/gestione-utenti.component';
+import {EditUserDialog, GestioneUtentiComponent} from './components/gestione-utenti.component';
 import {getItalianPaginatorIntl} from "./italian-paginator";
 import {ForbiddenComponent} from './components/forbidden.component';
 import {NotFoundComponent} from './components/not-found.component';
@@ -138,7 +138,8 @@ const appRoutes: Routes = [
         NotFoundComponent,
         MagazzinoComponent,
         StoricoComponent,
-        StatisticheComponent
+        StatisticheComponent,
+        EditUserDialog
     ],
     imports: [
         BrowserModule,
@@ -182,7 +183,8 @@ const appRoutes: Routes = [
         MatTabsModule,
         MatToolbarModule,
         MatTooltipModule,
-        MatTreeModule
+        MatTreeModule,
+        FormsModule
     ],
     providers: [
         {provide: MatPaginatorIntl, useValue: getItalianPaginatorIntl()}

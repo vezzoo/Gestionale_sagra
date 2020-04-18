@@ -24,6 +24,19 @@
 
             </div>
 
+            <div *ngIf="isGestioneUtenti()" class="text" style="margin: 0 1vw 0 auto">
+
+                <button
+                    mat-icon-button matSuffix
+                    (click)="addUser()" type="button"
+                    matTooltip="Nuovo utente"
+                    [matTooltipPosition]="position.value"
+                >
+                    <mat-icon>person_add</mat-icon>
+                </button>
+
+            </div>
+
             <button mat-icon-button matSuffix
                     (click)="logout()" type="button"
                     matTooltip="Logout"

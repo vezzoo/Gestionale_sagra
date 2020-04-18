@@ -1,8 +1,10 @@
 import * as pagesImported from "./pages_description/pagesDescription";
 import categoriesImported from "./pages_description/categories";
 import {Page} from "../app/interfaces/Page";
+import permissionsImported from "./pages_description/permissions";
 
 export const categories = categoriesImported;
+export const permissions = permissionsImported;
 
 export const pages = getPages();
 
@@ -28,3 +30,4 @@ export function getPagesOfCategory(cat: string, userPermissions: string[]): Page
         .filter(e => userPermissions.includes('root') || (userPermissions.includes(pages[e].requiredPermission) || pages[e].requiredPermission === ''))
         .map(e => pages[e]);
 }
+

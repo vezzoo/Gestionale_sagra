@@ -64,7 +64,15 @@ export class ToolbarComponent implements OnInit {
         return this.from === pages.dashboard.path;
     }
 
+    isGestioneUtenti() {
+        return this.from === pages.gestioneUtenti.path;
+    }
+
     username() {
         return LoginManager.getEnvLoginSync().current_user.username;
+    }
+
+    addUser() {
+        console.log("Ehy devo creare un nuovo utente!")
     }
 }

@@ -5,7 +5,7 @@
     "icons": {
         "128": "icon_128.png"
     },
-    "permissions": ["storage", "http://192.168.1.102:3000/*"],
+    "permissions": ["storage", "http://192.168.1.154:3000/*"],
     "app": {
         "background": {
             "scripts": [

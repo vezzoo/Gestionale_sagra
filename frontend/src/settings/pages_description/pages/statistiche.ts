@@ -7,5 +7,5 @@ export const statistiche = {
     hasSideNav: true,
     category: categories.gestione,
     icon: 'insert_chart_outlined',
-    requiredPermission: permissions.statistiche
+    requiredPermission: permissions.statistiche.name
 };

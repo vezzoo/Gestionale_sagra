@@ -7,5 +7,5 @@ export const magazzino = {
     hasSideNav: true,
     category: categories.gestione,
     icon: 'business',
-    requiredPermission: permissions.magazzino
+    requiredPermission: permissions.magazzino.name
 };

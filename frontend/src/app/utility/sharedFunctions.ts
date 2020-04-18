@@ -29,3 +29,7 @@ export function getPageNameFromPath(path: string): string {
 export async function pushTo(router, path) {
     await router.navigate([path]);
 }
+
+export function normalizePermission(permission: string) {
+    return permission.charAt(0).toUpperCase() + permission.slice(1).toLowerCase();
+}

@@ -3,7 +3,7 @@ import HttpRequestTemplate from "../network/http_client/HttpRequestTemplate";
 import LoginManagerAutenticathor from "../login/LoginManagerAutenticathor";
 
 // const base_path = "http://localhost:3000";
-const base_path = "http://192.168.1.102:3000";
+const base_path = "http://192.168.1.154:3000";
 
 const json_processor = new class implements Elaborator{
     elaborate(raw_fetch: any): Promise<any> {

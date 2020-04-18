@@ -7,5 +7,5 @@ export const storico = {
     hasSideNav: true,
     category: categories.gestione,
     icon: 'library_add_check',
-    requiredPermission: permissions.ordini
+    requiredPermission: permissions.ordini.name
 };

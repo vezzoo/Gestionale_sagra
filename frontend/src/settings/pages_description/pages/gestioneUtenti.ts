@@ -7,5 +7,5 @@ export const gestioneUtenti = {
     hasSideNav: true,
     category: categories.amministrazione,
     icon: 'supervised_user_circle',
-    requiredPermission: permissions.utenti
+    requiredPermission: permissions.utenti.name
 };
