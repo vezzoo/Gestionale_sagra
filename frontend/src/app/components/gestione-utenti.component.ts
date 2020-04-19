@@ -135,14 +135,17 @@ export class GestioneUtentiComponent implements OnInit {
     }
 
     editUser(user: UserData): void {
-        const dialogRef = this.editUserDialog.open(EditUserDialog, {
+        this.editUserDialog.open(EditUserDialog, {
             width: '40vw',
             data: user
         });
+    }
 
-        dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
-        });
+    getObjectsPerPage(): number[] {
+        if (innerHeight < 1000)
+            return [9];
+        else
+            return [14];
     }
 
 }
@@ -193,10 +196,12 @@ export class EditUserDialog {
             return true;
 
         for (let e of this.user.permissions)
-            if (e.slice(e.indexOf(this.writePermission.divider) + 1) === this.writePermission.word) {
-                isComplete = true;
-                break;
-            }
+            if (e.indexOf(this.writePermission.divider) !== -1)
+                if (e.slice(e.indexOf(this.writePermission.divider) + 1) === this.writePermission.word
+                    && e.slice(0, e.indexOf(this.writePermission.divider)) === permission.toLowerCase()) {
+                    isComplete = true;
+                    break;
+                }
 
         return isComplete;
     }
@@ -229,6 +234,33 @@ export class EditUserDialog {
     onRadioChange(event: any) {
         if (event.value === this._rootForm.yes)
             Object.keys(this.newPermissions).forEach(e => this.newPermissions[e] = this._typesOfPermissions.completo)
+    }
+
+    getNewPermissions(): string[] {
+        if (this.isRoot === this._rootForm.yes)
+            return [this._rootForm.permission];
+
+        let toReturn = [];
+
+        for (let e of Object.keys(this.newPermissions))
+            if (this.newPermissions[e] === this._typesOfPermissions.completo
+                || this.newPermissions[e] === this._typesOfPermissions.lettura) {
+                toReturn.push(e);
+
+                if (permissions[e.toLowerCase()].onlyRead
+                    && this.newPermissions[e] === this._typesOfPermissions.completo)
+                    toReturn.push(e + this.writePermission.divider + this.writePermission.word)
+            }
+
+        return toReturn;
+    }
+
+    updateUser() {
+        this.user.permissions = this.getNewPermissions();
+
+        console.log(this.user)
+
+        this.dialogRef.close();
     }
 
     get rootForm(): { no: string; yes: string; permission: string } {
