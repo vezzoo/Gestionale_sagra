@@ -31,8 +31,8 @@ import users from "./login/users";
         .then((db) => db.addModel(User))
         .then((db) => db.finalize()));
 
-    // await new User({username:"administrator", password:'admin'}).save();
-    // await new UserPermission({username:'administrator', group: 'root'}).save();
+    await new User({username:"administrator", password:'admin'}).save();
+    await new UserPermission({username:'administrator', group: 'root'}).save();
 
     await mainloop.exec();
 })(

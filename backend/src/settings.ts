@@ -16,8 +16,9 @@ export const DATABASE_HOST = 'localhost';
 
 export const DATABASE_REBUILD = !!!!!!false;
 
-export const USER_CREATION_DISABLE = true;
+export const USER_CREATION_DISABLE = !true;
 
+export const AUTHENTICATION_MIN_USER_LEN = 8;
 const _AUTH_RULE_PSW_MIN_LENGTH = (num:number) => `(?=.{${num},})`;
 const _AUTH_RULE_PSW_CONTAINS_DIGIT = `(?=.*\\d)`;
 const _AUTH_RULE_PSW_CONTAINS_LOWERCASE = `(?=.*[a-z])`;

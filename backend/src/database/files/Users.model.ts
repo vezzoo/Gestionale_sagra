@@ -57,7 +57,7 @@ export default class User extends Model<User>{
     @BeforeUpdate
     private static update_password(instance:User){
         let changed = instance.changed();
-        if (changed && changed.indexOf('password') > -1) User.generate_user(instance, !!instance.enabled);
+        if (changed && changed.indexOf('password') > -1 && changed.indexOf('salt') == -1) User.generate_user(instance, !!instance.enabled);
     }
 
     private static generate_db_passw(salt: string, password: string): string {

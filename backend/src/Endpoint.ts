@@ -4,6 +4,7 @@ import {ObjectSchema} from "fluent-schema";
 import Comparator from "./comparators/Comparator";
 import {AUTHENTICATION_HEADER, JWT_PUBLIC} from "./settings";
 import jwt from 'jsonwebtoken'
+import * as messages from "./messages"
 
 
 
@@ -19,7 +20,7 @@ export default class Endpoint {
     addCallback(method: string, url: string,  handler: (req: FastifyRequest, res: FastifyReply<ServerResponse>) => any, schema?: { body?: ObjectSchema, querystring?: ObjectSchema, params?: ObjectSchema, headers?: ObjectSchema }, oth: any = {}, handle_errors = true): Endpoint {
         this.eps.push(Object.assign({
             method,
-            url: `/${this.base_path}/${url}`.replace(/\/\//g, "/"),
+            url: `/${this.base_path}${url}`,
             schema: schema,
             attachValidation: handle_errors,
             handler
@@ -30,7 +31,7 @@ export default class Endpoint {
     addAuthCallback(permissions: Comparator<String[]>, method: string, url: string,  handler: (req: FastifyRequest, res: FastifyReply<ServerResponse>, user: {username: string, name: string, permissions: string[]}) => any, schema?: { body?: ObjectSchema, querystring?: ObjectSchema, params?: ObjectSchema, headers?: ObjectSchema }, oth: any = {}, handle_errors = true): Endpoint {
         this.eps.push(Object.assign({
             method,
-            url: `/${this.base_path}/${url}`.replace(/\/\//g, "/"),
+            url: `/${this.base_path}${url}`,
             schema: schema,
             attachValidation: handle_errors,
             handler: async (req: FastifyRequest, res: FastifyReply<ServerResponse>) => {
@@ -38,10 +39,20 @@ export default class Endpoint {
                 try {
                     // @ts-ignore
                     let user_data: {username: string, name: string, permissions: string[]} = jwt.verify(token, JWT_PUBLIC);
-                    if(!user_data?.permissions) throw Error("Invalid Payload");
-                    if(!permissions.eval(user_data.permissions ?? []) && user_data.permissions.indexOf("root") !== -1) throw Error("Invalid Credentials");
+                    if(!user_data?.permissions) throw Error("EJWTINVPAY");
+                    if(!permissions.eval(user_data.permissions ?? []) && user_data.permissions.indexOf("root") !== -1) throw Error("ENORIGHTS");
                     return await handler(req, res, user_data);
                 } catch (e) {
+                    switch(e.message){
+                        case "EJVTINVPAY":
+                            return messages.EJWTINVPAY(res);
+                        case "ENORIGHTS":
+                            return messages.ENORIGHTS(res);
+                        case "jwt expired":
+                            return messages.EJWTEXP(res);
+                        case "jwt must be provided":
+                            return messages.ENOJWT(res);
+                    }
                     res.code(403);
                     return {
                         message: e.message
